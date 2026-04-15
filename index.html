@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ErgMend — Erg Repair & Maintenance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;700;800;900&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+<style>
+:root {
+  --bg: #F0EBE1;
+  --dark: #0E0C0B;
+  --orange: #C93D17;
+  --orange-light: #E04D25;
+  --lime: #C5F141;
+  --surface: #FFFFFF;
+  --steel: #253C52;
+  --muted: rgba(14,12,11,0.45);
+  --border: rgba(14,12,11,0.09);
+  --font-head: 'Big Shoulders Display', sans-serif;
+  --font-body: 'Jost', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--dark);-webkit-font-smoothing:antialiased}
+
+/* ── NAV ──────────────────────────────────────────────── */
+#site-nav {
+  position: fixed;top:0;left:0;right:0;z-index:200;
+  height:72px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 2.5rem;
+  transition: background 0.35s, backdrop-filter 0.35s, box-shadow 0.35s;
+}
+#site-nav.scrolled {
+  background: rgba(14,12,11,0.88);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+}
+.nav-logo {
+  font-family: var(--font-head);
+  font-size: 1.65rem;font-weight:900;
+  color:#fff;text-decoration:none;letter-spacing:-0.01em;
+}
+.nav-logo span { color: var(--lime); }
+.nav-right { display:flex;align-items:center;gap:0.85rem }
+.btn-book {
+  background: var(--orange);color:#fff;
+  font-family:var(--font-body);font-size:0.875rem;font-weight:600;
+  padding:0.58rem 1.4rem;border-radius:100px;border:none;cursor:pointer;
+  transition:background 0.18s,transform 0.15s,box-shadow 0.18s;
+  box-shadow:0 4px 18px rgba(201,61,23,0.4);
+}
+.btn-book:hover { background:#b0340f;transform:translateY(-1px);box-shadow:0 6px 24px rgba(201,61,23,0.5) }
+.hamburger { display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none }
+.hamburger span { display:block;width:22px;height:2px;background:#fff;border-radius:1px;transition:transform 0.2s,opacity 0.2s }
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero {
+  background: var(--dark);
+  min-height: 100vh;
+  display: flex;flex-direction:column;
+  padding-top: 72px;
+  position: relative;overflow:hidden;
+}
+.hero::before {
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+}
+.hero::after {
+  content:'';position:absolute;
+  width:700px;height:700px;border-radius:50%;
+  background: radial-gradient(circle, rgba(201,61,23,0.12) 0%, transparent 70%);
+  top:-200px;right:-100px;pointer-events:none;
+}
+.hero-inner {
+  flex:1;display:grid;grid-template-columns:1fr 1fr;
+  max-width:1440px;width:100%;margin:0 auto;
+  padding:0 2.5rem;align-items:center;
+  position:relative;z-index:1;
+}
+.hero-left { padding:4rem 3rem 4rem 0 }
+.hero-badge {
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:100px;padding:0.38rem 1rem;
+  font-size:0.78rem;font-weight:500;color:rgba(255,255,255,0.72);
+  margin-bottom:2rem;letter-spacing:0.02em;
+}
+.badge-dot { width:7px;height:7px;border-radius:50%;background:var(--lime);flex-shrink:0 }
+.hero-h1 {
+  font-family:var(--font-head);
+  font-size:clamp(3.75rem,6.5vw,7.5rem);
+  font-weight:900;color:#fff;
+  letter-spacing:-0.02em;line-height:0.93;
+  margin-bottom:1.75rem;
+}
+.hero-h1 em { color:var(--orange);font-style:normal }
+.morph-wrap {
+  display:inline-block;
+  position:relative;overflow:hidden;
+  vertical-align:bottom;
+}
+#morph-word {
+  display:inline-block;
+  transition:opacity 0.28s ease,transform 0.28s ease;
+  color:var(--lime);
+}
+.hero-sub {
+  font-size:1rem;color:rgba(255,255,255,0.5);line-height:1.75;
+  max-width:430px;margin-bottom:2.5rem;font-weight:300;
+}
+.hero-ctas { display:flex;align-items:center;gap:1rem;flex-wrap:wrap }
+.btn-primary {
+  background:var(--orange);color:#fff;
+  font-family:var(--font-body);font-size:0.935rem;font-weight:600;
+  padding:0.875rem 2rem;border-radius:100px;border:none;cursor:pointer;
+  transition:background 0.18s,transform 0.15s,box-shadow 0.18s;
+  box-shadow:0 4px 24px rgba(201,61,23,0.35);
+}
+.btn-primary:hover { background:#b0340f;transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,61,23,0.45) }
+.btn-ghost {
+  background:transparent;color:rgba(255,255,255,0.6);
+  font-family:var(--font-body);font-size:0.935rem;font-weight:500;
+  padding:0.875rem 1.6rem;border-radius:100px;
+  border:1.5px solid rgba(255,255,255,0.2);cursor:pointer;
+  transition:border-color 0.18s,color 0.18s;
+  display:inline-flex;align-items:center;gap:0.4rem;
+}
+.btn-ghost:hover { border-color:rgba(255,255,255,0.5);color:#fff }
+.hero-right {
+  position:relative;height:580px;
+  display:flex;align-items:center;justify-content:center;
+}
+.img-grid { position:relative;width:100%;height:100% }
+.img-card {
+  position:absolute;border-radius:1.5rem;overflow:hidden;
+  background:#1a1a1a;
+  transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.img-card:hover { transform:scale(1.03) translateY(-4px) !important }
+.img-card img { width:100%;height:100%;object-fit:contain;display:block;padding:14px }
+.img-card--a {
+  width:220px;height:305px;top:20px;right:10px;
+  transform:rotate(-5deg);z-index:3;
+  box-shadow:0 30px 80px rgba(0,0,0,0.55),0 0 0 1px rgba(255,255,255,0.08);
+}
+.img-card--b {
+  width:165px;height:285px;top:35px;left:10px;
+  transform:rotate(5deg);z-index:1;
+  box-shadow:0 24px 64px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.06);
+}
+.img-card--c {
+  width:185px;height:255px;bottom:20px;left:50%;margin-left:-92px;
+  transform:rotate(-2deg);z-index:2;
+  box-shadow:0 24px 64px rgba(0,0,0,0.48),0 0 0 1px rgba(255,255,255,0.07);
+}
+.img-card-label {
+  position:absolute;bottom:0;left:0;right:0;
+  padding:0.8rem 1rem;
+  background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);
+  font-family:var(--font-head);font-size:0.8rem;font-weight:700;
+  color:rgba(255,255,255,0.85);letter-spacing:0.04em;text-transform:uppercase;
+}
+.img-card--a::after {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(201,61,23,0.15) 0%,transparent 60%);
+  pointer-events:none;z-index:1;
+}
+.img-card--b::after {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(37,60,82,0.22) 0%,transparent 60%);
+  pointer-events:none;z-index:1;
+}
+.img-card--c::after {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(197,241,65,0.1) 0%,transparent 60%);
+  pointer-events:none;z-index:1;
+}
+.hero-scroll-hint {
+  text-align:center;padding-bottom:2rem;
+  font-size:0.75rem;letter-spacing:0.12em;color:rgba(255,255,255,0.25);
+  text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:0.6rem;
+  position:relative;z-index:1;
+}
+.scroll-line {
+  width:1px;height:40px;
+  background:linear-gradient(to bottom,rgba(255,255,255,0.3),transparent);
+  animation:scrollline 2s ease-in-out infinite;
+}
+@keyframes scrollline{0%,100%{opacity:0.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.3)}}
+
+/* ── TRUST STRIP ──────────────────────────────────────────── */
+.trust-strip {
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:1.5rem 2.5rem;
+}
+.trust-inner {
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:nowrap;
+}
+.trust-item {
+  display:flex;align-items:center;gap:0.65rem;
+  font-size:0.85rem;font-weight:500;color:var(--muted);
+}
+.trust-icon {
+  width:32px;height:32px;border-radius:50%;
+  background:var(--bg);display:flex;align-items:center;justify-content:center;
+  font-size:0.95rem;flex-shrink:0;
+}
+.trust-divider { width:1px;height:28px;background:var(--border) }
+
+/* ── SERVICES INTRO ──────────────────────────────────────── */
+.section { padding:5.5rem 2.5rem }
+.section-inner { max-width:720px;margin:0 auto;text-align:center }
+.section-tag {
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(201,61,23,0.08);border:1px solid rgba(201,61,23,0.15);
+  border-radius:100px;padding:0.3rem 0.85rem;
+  font-size:0.75rem;font-weight:600;color:var(--orange);
+  letter-spacing:0.05em;text-transform:uppercase;margin-bottom:1.5rem;
+}
+.section-h2 {
+  font-family:var(--font-head);
+  font-size:clamp(2.75rem,5vw,4.75rem);
+  font-weight:900;letter-spacing:-0.03em;line-height:1.0;
+  margin-bottom:1.1rem;
+}
+.section-h2 em { color:var(--orange);font-style:normal }
+.section-p {
+  font-size:1rem;color:var(--muted);line-height:1.75;max-width:540px;margin:0 auto 2.25rem;
+}
+.btn-outline {
+  background:transparent;color:var(--dark);
+  font-family:var(--font-body);font-size:0.9rem;font-weight:600;
+  padding:0.75rem 1.75rem;border-radius:100px;
+  border:1.5px solid rgba(14,12,11,0.3);cursor:pointer;
+  transition:background 0.18s,color 0.18s,border-color 0.18s;
+  text-decoration:none;display:inline-block;
+}
+.btn-outline:hover { background:var(--dark);color:#fff;border-color:var(--dark) }
+
+/* ── SERVICE CARDS ──────────────────────────────────────── */
+.cards-wrap { padding:0 2.5rem 4rem;max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem }
+.scard {
+  border-radius:1.5rem;overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;min-height:460px;
+  background:#fff;
+}
+.scard-text {
+  padding:3.5rem 3rem;display:flex;flex-direction:column;justify-content:center;
+}
+.scard-num {
+  font-family:var(--font-head);font-size:4.5rem;font-weight:900;
+  color:rgba(14,12,11,0.06);letter-spacing:-0.04em;line-height:1;
+  margin-bottom:-0.5rem;
+}
+.scard-tag {
+  display:inline-flex;align-items:center;gap:0.45rem;
+  background:var(--bg);border-radius:100px;padding:0.28rem 0.8rem;
+  font-size:0.73rem;font-weight:700;color:var(--dark);
+  margin-bottom:1.25rem;width:fit-content;letter-spacing:0.02em;text-transform:uppercase;
+}
+.scard-dot { width:8px;height:8px;border-radius:50%;flex-shrink:0 }
+.scard h3 {
+  font-family:var(--font-head);font-size:clamp(1.6rem,2.5vw,2.25rem);
+  font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-bottom:0.9rem;
+}
+.scard p { font-size:0.935rem;color:var(--muted);line-height:1.7;max-width:360px;margin-bottom:1.5rem }
+.scard-steps { display:flex;flex-direction:column;gap:0.55rem;margin-bottom:1.5rem }
+.scard-step {
+  display:flex;align-items:center;gap:0.75rem;
+  font-size:0.875rem;font-weight:500;color:var(--dark);
+}
+.step-n {
+  width:24px;height:24px;border-radius:50%;
+  background:var(--orange);color:#fff;
+  font-family:var(--font-head);font-size:0.75rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.learn-link {
+  background:none;border:none;font-family:var(--font-body);
+  font-size:0.875rem;font-weight:700;color:var(--orange);cursor:pointer;
+  display:inline-flex;align-items:center;gap:0.3rem;
+  border-bottom:1.5px solid var(--orange);padding-bottom:0.05rem;
+  transition:opacity 0.18s;width:fit-content;
+}
+.learn-link:hover { opacity:0.65 }
+.scard-visual {
+  position:relative;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;min-height:360px;
+}
+.vis-dark { background:var(--dark) }
+.vis-steel { background:var(--steel) }
+.vis-orange { background:var(--orange) }
+.vis-bg { background:var(--bg) }
+/* Toolbox visual */
+.toolbox-grid {
+  display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;
+  max-width:280px;
+}
+.tool-card {
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
+  border-radius:0.875rem;padding:1.1rem;
+  display:flex;flex-direction:column;align-items:flex-start;gap:0.4rem;
+}
+.tool-icon { font-size:1.5rem }
+.tool-label { font-size:0.65rem;font-weight:600;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.06em }
+.tool-name { font-size:0.82rem;font-weight:700;color:rgba(255,255,255,0.9) }
+/* Checklist visual */
+.checklist { display:flex;flex-direction:column;gap:0.6rem;max-width:280px;width:100% }
+.check-item {
+  display:flex;align-items:center;gap:0.75rem;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:0.75rem;padding:0.75rem 1rem;
+}
+.check-box {
+  width:20px;height:20px;border-radius:5px;
+  background:var(--lime);display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;font-weight:800;color:var(--dark);flex-shrink:0;
+}
+.check-text { font-size:0.8rem;font-weight:500;color:rgba(255,255,255,0.85) }
+
+/* ── STATS / IMPACT ──────────────────────────────────────── */
+.stats-section {
+  background:var(--dark);padding:5.5rem 2.5rem;
+  position:relative;overflow:hidden;
+}
+.stats-section::before {
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.03;pointer-events:none;
+}
+.stats-inner {
+  max-width:1100px;margin:0 auto;text-align:center;position:relative;z-index:1;
+}
+.stats-eyebrow {
+  font-family:var(--font-body);font-size:0.8rem;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);
+  margin-bottom:2rem;
+}
+.stats-headline {
+  font-family:var(--font-head);font-size:clamp(2.5rem,5.5vw,5.5rem);
+  font-weight:900;color:#fff;letter-spacing:-0.03em;line-height:0.97;
+  margin-bottom:1rem;
+}
+.stats-headline em { color:var(--orange);font-style:normal }
+.explode-container {
+  display:inline-flex;align-items:center;gap:0;
+  position:relative;
+}
+.explode-char {
+  display:inline-block;
+  color:var(--lime);
+  transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.5s;
+}
+.stats-sub {
+  font-size:0.95rem;color:rgba(255,255,255,0.45);line-height:1.7;
+  max-width:480px;margin:0 auto 4rem;font-weight:300;
+}
+.comparison-grid {
+  display:grid;grid-template-columns:1fr 1fr;gap:2px;
+  border-radius:1.25rem;overflow:hidden;max-width:820px;margin:0 auto 4rem;
+}
+.comp-col {
+  padding:2.5rem;
+  display:flex;flex-direction:column;gap:1.25rem;
+}
+.comp-col.good { background:rgba(197,241,65,0.07) }
+.comp-col.bad { background:rgba(201,61,23,0.07) }
+.comp-header {
+  display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem;
+}
+.comp-dot { width:10px;height:10px;border-radius:50%;flex-shrink:0 }
+.comp-title { font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:0.01em }
+.comp-bar-wrap { display:flex;flex-direction:column;gap:0.75rem }
+.comp-bar-row { display:flex;flex-direction:column;gap:0.35rem }
+.comp-bar-label { font-size:0.7rem;color:rgba(255,255,255,0.45);font-weight:500;text-align:left }
+.comp-bar-track {
+  height:10px;border-radius:100px;background:rgba(255,255,255,0.07);overflow:hidden;
+}
+.comp-bar-fill {
+  height:100%;border-radius:100px;
+  transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s;
+}
+.fill-good { background:var(--lime) }
+.fill-bad { background:var(--orange) }
+.stats-cols {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid rgba(255,255,255,0.07);padding-top:3.5rem;
+  max-width:820px;margin:0 auto;
+}
+.stat-col { padding:0 2.5rem;border-left:1px solid rgba(255,255,255,0.07);text-align:left }
+.stat-col:first-child { border-left:none;padding-left:0 }
+.stat-col:last-child { padding-right:0 }
+.stat-num {
+  font-family:var(--font-head);font-size:clamp(2.25rem,4vw,3.5rem);
+  font-weight:900;letter-spacing:-0.04em;line-height:1;margin-bottom:0.6rem;
+}
+.stat-num.orange { color:var(--orange) }
+.stat-num.lime { color:var(--lime) }
+.stat-num.white { color:#fff }
+.stat-desc { font-size:0.82rem;color:rgba(255,255,255,0.45);line-height:1.5;font-weight:400 }
+
+/* ── HOW IT WORKS ─────────────────────────────────────── */
+.how-wrap { background:#fff;padding:5.5rem 2.5rem }
+.how-inner { max-width:1100px;margin:0 auto }
+.how-hdr { text-align:center;margin-bottom:4rem }
+.how-h2 {
+  font-family:var(--font-head);font-size:clamp(2.25rem,4vw,3.75rem);
+  font-weight:900;letter-spacing:-0.03em;line-height:1.05;margin-bottom:0.8rem;
+}
+.how-sub { font-size:0.95rem;color:var(--muted);max-width:420px;margin:0 auto }
+.how-steps { display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;position:relative }
+.how-steps::before {
+  content:'';position:absolute;top:32px;left:calc(16.6% + 1rem);right:calc(16.6% + 1rem);
+  height:1px;background:linear-gradient(90deg,var(--border),var(--border));
+  background-image:repeating-linear-gradient(90deg,var(--border) 0,var(--border) 8px,transparent 8px,transparent 16px);
+}
+.how-step { text-align:center;padding:0 1rem }
+.step-circle {
+  width:64px;height:64px;border-radius:50%;
+  background:var(--dark);display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;position:relative;z-index:1;
+  font-family:var(--font-head);font-size:1.35rem;font-weight:900;color:#fff;
+}
+.how-step:first-child .step-circle { background:var(--orange) }
+.how-step:nth-child(2) .step-circle { background:var(--steel) }
+.how-step:last-child .step-circle { background:var(--dark) }
+.how-step h4 {
+  font-family:var(--font-head);font-size:1.2rem;font-weight:800;
+  letter-spacing:-0.01em;margin-bottom:0.55rem;
+}
+.how-step p { font-size:0.875rem;color:var(--muted);line-height:1.65 }
+
+/* ── OBJECTION BUSTERS ───────────────────────────────── */
+.obj-wrap { background:var(--bg);padding:5.5rem 2.5rem }
+.obj-inner { max-width:1100px;margin:0 auto }
+.obj-hdr { margin-bottom:3.5rem }
+.obj-hdr-top { display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap }
+.obj-h2 {
+  font-family:var(--font-head);font-size:clamp(2rem,4vw,3.5rem);
+  font-weight:900;letter-spacing:-0.03em;line-height:1.05;
+  max-width:500px;
+}
+.obj-h2 em { color:var(--orange);font-style:normal }
+.obj-intro { font-size:0.9rem;color:var(--muted);max-width:320px;line-height:1.65 }
+.obj-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem }
+.obj-card {
+  background:#fff;border-radius:1.25rem;padding:2rem;
+  border:1px solid var(--border);
+  transition:transform 0.25s,box-shadow 0.25s;
+}
+.obj-card:hover { transform:translateY(-4px);box-shadow:0 16px 48px rgba(14,12,11,0.1) }
+.obj-icon {
+  width:48px;height:48px;border-radius:0.75rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.35rem;margin-bottom:1.25rem;
+}
+.obj-card:nth-child(1) .obj-icon { background:rgba(197,241,65,0.2) }
+.obj-card:nth-child(2) .obj-icon { background:rgba(201,61,23,0.1) }
+.obj-card:nth-child(3) .obj-icon { background:rgba(37,60,82,0.1) }
+.obj-h3 {
+  font-family:var(--font-head);font-size:1.3rem;font-weight:800;
+  letter-spacing:-0.01em;margin-bottom:0.65rem;
+}
+.obj-p { font-size:0.875rem;color:var(--muted);line-height:1.65 }
+.obj-cta { text-align:center;margin-top:3rem }
+.btn-dark {
+  background:var(--dark);color:#fff;
+  font-family:var(--font-body);font-size:0.935rem;font-weight:600;
+  padding:0.9rem 2.25rem;border-radius:100px;border:none;cursor:pointer;
+  transition:background 0.18s,transform 0.15s;
+}
+.btn-dark:hover { background:#2a2522;transform:translateY(-2px) }
+
+/* ── CONTACT FORM ────────────────────────────────────── */
+.form-section {
+  background:var(--dark);padding:5.5rem 2.5rem;
+  position:relative;overflow:hidden;
+}
+.form-section::before {
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.03;pointer-events:none;
+}
+.form-inner {
+  max-width:1100px;margin:0 auto;position:relative;z-index:1;
+  display:flex;gap:5rem;align-items:flex-start;
+}
+.form-left {
+  flex:0 0 320px;max-width:320px;
+  display:flex;flex-direction:column;gap:2.5rem;
+}
+.form-tag {
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(197,241,65,0.1);border:1px solid rgba(197,241,65,0.2);
+  border-radius:100px;padding:0.3rem 0.85rem;
+  font-size:0.75rem;font-weight:600;color:var(--lime);
+  letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.5rem;
+  display:block;width:fit-content;
+}
+.form-h2 {
+  font-family:var(--font-head);font-size:clamp(2.5rem,4vw,4rem);
+  font-weight:900;color:#fff;letter-spacing:-0.03em;line-height:0.97;
+  margin-bottom:1rem;
+}
+.form-h2 em { color:var(--lime);font-style:normal }
+.form-sub { font-size:0.9rem;color:rgba(255,255,255,0.4);line-height:1.75;font-weight:300 }
+.form-contact-details { display:flex;flex-direction:column;gap:1.25rem }
+.form-contact-heading {
+  font-family:var(--font-head);font-size:1.15rem;font-weight:800;
+  color:rgba(255,255,255,0.85);margin-bottom:0.5rem;
+}
+.form-contact-item {
+  display:flex;align-items:flex-start;gap:0.75rem;
+}
+.fci-icon {
+  width:36px;height:36px;border-radius:0.625rem;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;margin-top:0.1rem;
+}
+.fci-label { font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.35);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.2rem }
+.fci-value { font-size:0.875rem;color:rgba(255,255,255,0.8);font-weight:500 }
+.fci-value a { color:var(--lime);text-decoration:none }
+.fci-value a:hover { text-decoration:underline }
+.form-right { flex:1;min-width:0 }
+.form-card {
+  background:#1d1b18;
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:1.25rem;padding:2.25rem;
+}
+.contact-form { display:flex;flex-direction:column;gap:1rem }
+.form-field { display:flex;flex-direction:column;gap:0.45rem }
+.form-label {
+  font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.45);
+  letter-spacing:0.05em;text-transform:uppercase;
+}
+.form-label span { color:var(--orange);margin-left:0.2rem }
+.form-input, .form-textarea {
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.16);
+  border-radius:0.625rem;padding:0.75rem 1rem;
+  font-family:var(--font-body);font-size:0.9rem;font-weight:400;
+  color:#fff;outline:none;
+  transition:border-color 0.18s,background 0.18s;
+  width:100%;
+}
+.form-input::placeholder, .form-textarea::placeholder { color:rgba(255,255,255,0.28) }
+.form-input:focus, .form-textarea:focus {
+  border-color:rgba(197,241,65,0.45);
+  background:rgba(255,255,255,0.07);
+}
+.form-textarea { resize:vertical;min-height:90px }
+.form-row { display:grid;grid-template-columns:1fr 1fr;gap:1rem }
+.form-submit {
+  background:var(--lime);color:var(--dark);
+  font-family:var(--font-body);font-size:0.95rem;font-weight:700;
+  padding:0.875rem 2rem;border-radius:0.625rem;border:none;cursor:pointer;
+  width:100%;margin-top:0.25rem;
+  transition:background 0.18s,transform 0.15s,box-shadow 0.18s;
+  box-shadow:0 4px 20px rgba(197,241,65,0.2);
+}
+.form-submit:hover { background:#b3de2a;transform:translateY(-1px);box-shadow:0 6px 28px rgba(197,241,65,0.32) }
+.form-note { font-size:0.72rem;color:rgba(255,255,255,0.2);text-align:center;margin-top:0.4rem }
+@media(max-width:900px){
+  .form-inner { flex-direction:column;gap:3rem }
+  .form-left { flex:none;max-width:100% }
+}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer {
+  background:var(--bg);border-top:1px solid var(--border);
+  padding:2.25rem 2.5rem;
+}
+.foot-inner {
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.foot-logo { font-family:var(--font-head);font-size:1.3rem;font-weight:900;color:var(--dark);letter-spacing:-0.01em }
+.foot-logo span { color:var(--orange) }
+.foot-copy { font-size:0.78rem;color:var(--muted) }
+
+/* ── MODAL ───────────────────────────────────────────── */
+.modal-overlay {
+  position:fixed;inset:0;z-index:500;
+  background:rgba(14,12,11,0.75);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;padding:2rem;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.3s;
+}
+.modal-overlay.open { opacity:1;pointer-events:all }
+.modal-card {
+  background:#fff;border-radius:1.75rem;padding:2.5rem;
+  width:100%;max-width:500px;max-height:90vh;overflow-y:auto;
+  transform:translateY(24px);
+  transition:transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.modal-overlay.open .modal-card { transform:translateY(0) }
+.modal-hdr { display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.75rem;gap:1rem }
+.modal-title { font-family:var(--font-head);font-size:2rem;font-weight:900;letter-spacing:-0.02em;line-height:1.1 }
+.modal-title em { color:var(--orange);font-style:normal }
+.modal-close {
+  width:36px;height:36px;border-radius:50%;
+  background:var(--bg);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1.1rem;color:var(--muted);
+  transition:background 0.18s;
+}
+.modal-close:hover { background:#e0dcd4 }
+.modal-form { display:flex;flex-direction:column;gap:0.875rem }
+.mf-label { font-size:0.78rem;font-weight:600;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase }
+.mf-label span { color:var(--orange) }
+.mf-input, .mf-textarea {
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:0.75rem;padding:0.8rem 1rem;
+  font-family:var(--font-body);font-size:0.935rem;
+  color:var(--dark);outline:none;width:100%;
+  transition:border-color 0.18s;
+}
+.mf-input:focus, .mf-textarea:focus { border-color:var(--orange) }
+.mf-textarea { resize:vertical;min-height:90px }
+.mf-submit {
+  background:var(--orange);color:#fff;
+  font-family:var(--font-body);font-size:0.95rem;font-weight:700;
+  padding:0.95rem 2rem;border-radius:100px;border:none;cursor:pointer;
+  margin-top:0.25rem;
+  transition:background 0.18s,transform 0.15s;
+  box-shadow:0 4px 20px rgba(201,61,23,0.3);
+}
+.mf-submit:hover { background:#b0340f;transform:translateY(-1px) }
+.mf-note { font-size:0.73rem;color:var(--muted);text-align:center }
+
+/* ── SIDEBAR DRAWER ──────────────────────────────────── */
+.sidebar-overlay {
+  position:fixed;inset:0;z-index:400;
+  background:rgba(14,12,11,0.6);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;
+  transition:opacity 0.35s;
+}
+.sidebar-overlay.open { opacity:1;pointer-events:all }
+.sidebar {
+  position:fixed;top:0;right:0;bottom:0;z-index:401;
+  width:min(420px,92vw);
+  background:#0E0C0B;
+  border-left:1px solid rgba(255,255,255,0.07);
+  display:flex;flex-direction:column;
+  transform:translateX(100%);
+  transition:transform 0.42s cubic-bezier(0.25,0.46,0.45,0.94);
+  overflow:hidden;
+}
+.sidebar.open { transform:translateX(0) }
+.sidebar-hdr {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem 1.75rem;border-bottom:1px solid rgba(255,255,255,0.07);
+  flex-shrink:0;
+}
+.sidebar-logo { font-family:var(--font-head);font-size:1.5rem;font-weight:900;color:#fff;letter-spacing:-0.01em }
+.sidebar-logo span { color:var(--lime) }
+.sidebar-close {
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1rem;color:rgba(255,255,255,0.7);
+  transition:background 0.18s,color 0.18s;
+}
+.sidebar-close:hover { background:rgba(255,255,255,0.12);color:#fff }
+.sidebar-nav {
+  padding:1.5rem 1.75rem;border-bottom:1px solid rgba(255,255,255,0.07);
+  flex-shrink:0;
+}
+.sidebar-nav-label {
+  font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.28);margin-bottom:1rem;
+}
+.sidebar-nav-links { display:flex;flex-direction:column;gap:0.2rem }
+.sidebar-nav-link {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.7rem 0.9rem;border-radius:0.75rem;
+  font-family:var(--font-head);font-size:1.25rem;font-weight:800;
+  color:rgba(255,255,255,0.8);text-decoration:none;letter-spacing:-0.01em;
+  transition:background 0.18s,color 0.18s;cursor:pointer;background:none;border:none;width:100%;text-align:left;
+}
+.sidebar-nav-link:hover { background:rgba(255,255,255,0.06);color:#fff }
+.sidebar-nav-link-arrow { font-size:0.85rem;color:rgba(255,255,255,0.25);transition:color 0.18s }
+.sidebar-nav-link:hover .sidebar-nav-link-arrow { color:var(--lime) }
+.sidebar-scroll {
+  flex:1;overflow-y:auto;min-height:0;
+}
+.sidebar-about {
+  padding:1.75rem;
+}
+.sidebar-about-label {
+  font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.28);margin-bottom:1.1rem;
+}
+.sidebar-about-card {
+  border-radius:1.25rem;overflow:hidden;position:relative;
+  background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);
+}
+.sidebar-about-media {
+  width:100%;aspect-ratio:16/10;object-fit:cover;object-position:center 20%;display:block;
+}
+.sidebar-about-media-video {
+  width:100%;aspect-ratio:16/10;object-fit:cover;display:block;
+}
+.sidebar-about-overlay {
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(14,12,11,0.9) 0%,rgba(14,12,11,0.1) 60%);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:1.25rem 1.25rem 1.5rem;
+}
+.sidebar-about-wip {
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:rgba(201,61,23,0.18);border:1px solid rgba(201,61,23,0.3);
+  border-radius:100px;padding:0.25rem 0.7rem;
+  font-size:0.65rem;font-weight:700;color:var(--orange);
+  letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.6rem;width:fit-content;
+}
+.sidebar-about-name {
+  font-family:var(--font-head);font-size:1.5rem;font-weight:900;color:#fff;
+  letter-spacing:-0.01em;line-height:1.1;margin-bottom:0.35rem;
+}
+.sidebar-about-desc {
+  font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.55;
+}
+.sidebar-cta {
+  padding:1.25rem 1.75rem 2rem;flex-shrink:0;
+  border-top:1px solid rgba(255,255,255,0.07);
+  display:flex;flex-direction:column;gap:0.65rem;
+}
+.sidebar-cta-btn {
+  display:flex;align-items:center;justify-content:center;gap:0.55rem;
+  border-radius:100px;padding:0.78rem 1.5rem;
+  font-family:var(--font-body);font-size:0.9rem;font-weight:600;
+  cursor:pointer;border:none;transition:transform 0.15s,box-shadow 0.18s;width:100%;
+}
+.sidebar-cta-btn.primary { background:var(--orange);color:#fff;box-shadow:0 4px 20px rgba(201,61,23,0.35) }
+.sidebar-cta-btn.primary:hover { box-shadow:0 6px 28px rgba(201,61,23,0.48);transform:translateY(-1px) }
+.sidebar-cta-btn.ghost { background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.12) }
+.sidebar-cta-btn.ghost:hover { background:rgba(255,255,255,0.1);color:#fff }
+
+/* ── SCROLL REVEAL ───────────────────────────────────── */
+.reveal {
+  opacity:0;transform:translateY(28px);
+  transition:opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94),transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.reveal.visible { opacity:1;transform:translateY(0) }
+.reveal-delay-1 { transition-delay:0.1s }
+.reveal-delay-2 { transition-delay:0.2s }
+.reveal-delay-3 { transition-delay:0.3s }
+.reveal-delay-4 { transition-delay:0.4s }
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media(max-width:900px) {
+  .hero-inner { grid-template-columns:1fr }
+  .hero-right { height:380px;min-height:380px }
+  .hero-left { padding:3rem 0 2rem }
+  .scard { grid-template-columns:1fr }
+  .how-steps { grid-template-columns:1fr }
+  .how-steps::before { display:none }
+  .obj-cards { grid-template-columns:1fr }
+  .stats-cols { grid-template-columns:1fr }
+  .stat-col { border-left:none;border-top:1px solid rgba(255,255,255,0.07);padding:1.5rem 0;margin-top:0 }
+  .stat-col:first-child { border-top:none }
+  .comparison-grid { grid-template-columns:1fr }
+  .form-row { grid-template-columns:1fr }
+}
+
+/* ── MACHINES SECTION ─────────────────────────────────── */
+.machines-section { padding:5.5rem 2.5rem;background:#fff }
+.machines-inner { max-width:1100px;margin:0 auto;text-align:center }
+.machines-grid {
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;
+}
+.machine-card {
+  border-radius:1.5rem;padding:2.5rem 1.5rem 2rem;
+  display:flex;flex-direction:column;align-items:center;gap:1.1rem;
+  border:1.5px solid var(--border);background:var(--bg);
+  transition:transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94),box-shadow 0.28s;
+  position:relative;overflow:hidden;
+}
+.machine-card:hover { transform:translateY(-6px);box-shadow:0 24px 64px rgba(14,12,11,0.1) }
+.machine-card::after {
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+}
+.machine-card:nth-child(1)::after { background:var(--orange) }
+.machine-card:nth-child(2)::after { background:var(--steel) }
+.machine-card:nth-child(3)::after { background:var(--lime) }
+.machine-card img {
+  height:155px;object-fit:contain;
+  filter:drop-shadow(0 8px 24px rgba(0,0,0,0.14));
+  transition:transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.machine-card:hover img { transform:scale(1.05) translateY(-4px) }
+.machine-card h3 {
+  font-family:var(--font-head);font-size:1.45rem;font-weight:800;letter-spacing:-0.01em;line-height:1.1;
+}
+.machine-card p { font-size:0.845rem;color:var(--muted);line-height:1.65;max-width:220px }
+.machine-tag {
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:rgba(14,12,11,0.06);border-radius:100px;
+  padding:0.25rem 0.75rem;font-size:0.7rem;font-weight:700;
+  color:var(--muted);letter-spacing:0.04em;text-transform:uppercase;
+}
+.machines-note {
+  display:inline-flex;align-items:center;gap:0.6rem;margin-top:2.25rem;
+  background:rgba(14,12,11,0.04);border:1px solid var(--border);
+  border-radius:100px;padding:0.5rem 1.25rem;
+  font-size:0.8rem;color:var(--muted);font-weight:500;
+}
+.machines-note::before {
+  content:'';display:inline-block;width:7px;height:7px;
+  border-radius:50%;background:var(--lime);flex-shrink:0;
+}
+@media(max-width:900px) { .machines-grid { grid-template-columns:1fr } }
+
+/* ── DAMPER TABLE ─────────────────────────────────────── */
+.damper-wrap {
+  max-width:820px;margin:3.5rem auto 0;
+  border-top:1px solid rgba(255,255,255,0.07);padding-top:3.5rem;text-align:left;
+}
+.damper-eyebrow {
+  font-size:0.75rem;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.6rem;
+}
+.damper-title {
+  font-family:var(--font-head);font-size:clamp(1.5rem,2.8vw,2.25rem);
+  font-weight:900;color:#fff;letter-spacing:-0.02em;line-height:1.1;margin-bottom:0.75rem;
+}
+.damper-title em { color:var(--lime);font-style:normal }
+.damper-intro {
+  font-size:0.875rem;color:rgba(255,255,255,0.45);line-height:1.75;
+  margin-bottom:1.5rem;max-width:640px;
+}
+.damper-table-wrap { border-radius:1rem;overflow:hidden;border:1px solid rgba(255,255,255,0.07) }
+.damper-table { width:100%;border-collapse:collapse }
+.damper-table thead tr { background:rgba(255,255,255,0.05) }
+.damper-table th {
+  font-family:var(--font-head);font-size:0.72rem;font-weight:700;
+  color:rgba(255,255,255,0.35);letter-spacing:0.07em;text-transform:uppercase;
+  padding:0.875rem 1.25rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.damper-table tbody tr:not(:last-child) { border-bottom:1px solid rgba(255,255,255,0.05) }
+.damper-table tbody tr:hover { background:rgba(255,255,255,0.03) }
+.damper-table td { padding:0.875rem 1.25rem;font-size:0.875rem;color:rgba(255,255,255,0.72) }
+.damper-table td:first-child { font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:#fff }
+.damper-table .td-lime { color:var(--lime);font-weight:600 }
+.damper-table .td-orange { color:var(--orange);font-weight:600 }
+.damper-note {
+  margin-top:1.1rem;padding:1rem 1.35rem;
+  background:rgba(197,241,65,0.07);border:1px solid rgba(197,241,65,0.15);
+  border-radius:0.75rem;font-size:0.815rem;color:rgba(255,255,255,0.5);line-height:1.7;
+}
+.damper-note strong { color:var(--lime) }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="site-nav">
+  <a class="nav-logo" href="#">Erg<span>Mend</span></a>
+  <div class="nav-right">
+    <button class="btn-book" onclick="openModal()">Book a chat</button>
+    <button class="hamburger" aria-label="Menu" onclick="openSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div id="hero-particles" style="position:absolute;inset:0;z-index:0;pointer-events:none"></div>
+  <div class="hero-inner">
+    <!-- LEFT -->
+    <div class="hero-left">
+      <h1 class="hero-h1">
+        Looking to<br>
+        <span class="morph-wrap"><span id="morph-word">mend</span></span><br>
+        your <em>erg?</em>
+      </h1>
+      <p class="hero-sub">
+        Rowing machines. Ski ergs. Bike ergs. If your machine makes a noise
+        it never used to — or it's due a full stripped-down service —
+        I assess it, source what's needed, and fix it right.
+      </p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="openModal()">Book a chat</button>
+        <button class="btn-ghost" onclick="document.getElementById('product-tour').scrollIntoView({behavior:'smooth'})">
+          How it works <span>↓</span>
+        </button>
+      </div>
+    </div>
+    <!-- RIGHT: athlete image grid -->
+    <div class="hero-right">
+      <div class="img-grid">
+        <div class="img-card img-card--a" onclick="document.getElementById('machines').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
+          <img src="ergmendBrandAssets/C2rowerg2022-removebg-preview.png" alt="Concept2 RowErg">
+          <div class="img-card-label">ROW ERG</div>
+        </div>
+        <div class="img-card img-card--b" onclick="document.getElementById('machines').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
+          <img src="ergmendBrandAssets/skierg-removebg-preview.png" alt="Concept2 SkiErg">
+          <div class="img-card-label">SKI ERG</div>
+        </div>
+        <div class="img-card img-card--c" onclick="document.getElementById('machines').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
+          <img src="ergmendBrandAssets/bikeerg-removebg-preview.png" alt="Concept2 BikeErg">
+          <div class="img-card-label">BIKE ERG</div>
+        </div>
+        <!-- Floating detail -->
+        <div style="position:absolute;bottom:20px;right:10px;background:rgba(197,241,65,0.12);border:1px solid rgba(197,241,65,0.2);border-radius:1rem;padding:0.85rem 1.1rem;backdrop-filter:blur(8px);z-index:5;max-width:190px">
+          <div style="font-size:0.65rem;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.3rem">Latest fix</div>
+          <div style="font-family:'Big Shoulders Display',sans-serif;font-size:1rem;font-weight:800;color:#fff;">Chain replaced ✓</div>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);margin-top:0.15rem">Same-day service</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ── TRUST STRIP ── -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-icon">⏱️</div>
+      I always show up on time
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <div class="trust-icon">💬</div>
+      Price agreed before work starts
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <div class="trust-icon">🏅</div>
+      Done by athletes for athletes
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <div class="trust-icon">🔧</div>
+      2+ years hands-on experience
+    </div>
+  </div>
+</div>
+
+<!-- ── PHONE CTA STRIP ── -->
+<div style="background:var(--dark);padding:1rem 2.5rem;border-bottom:1px solid rgba(255,255,255,0.07)">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap">
+    <span style="font-size:0.85rem;color:rgba(255,255,255,0.55);font-weight:400">When you reach out —</span>
+    <span style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(197,241,65,0.1);border:1px solid rgba(197,241,65,0.22);border-radius:100px;padding:0.42rem 1.1rem;font-size:0.82rem;font-weight:600;color:var(--lime)">
+      <span>📞</span> Give me a call &nbsp;<strong>+353 (0)83 4300 112</strong>
+    </span>
+    <span style="font-size:0.72rem;color:rgba(255,255,255,0.3)">or</span>
+    <button onclick="openModal()" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:0.42rem 1.1rem;font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.7);cursor:pointer;font-family:var(--font-body);transition:background 0.18s" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+      <span>✉️</span> Send me a message
+    </button>
+  </div>
+</div>
+
+<!-- ── SERVICES INTRO ── -->
+<section class="section" id="product-tour">
+  <div class="section-inner">
+    <div class="section-tag reveal">Services I offer</div>
+    <h2 class="section-h2 reveal reveal-delay-1">
+      What I do for<br>your <em>machine</em>
+    </h2>
+    <p class="section-p reveal reveal-delay-2">
+      If your machine makes a noise it never used to make, or it's time for a
+      full stripped-down service — I handle it. Rowing machines, ski ergs,
+      bike ergs. You explain the problem, I come and assess it, source what's
+      needed, and come back to fix it right.
+    </p>
+    <a class="btn-outline reveal reveal-delay-3" href="#services">See services ↓</a>
+  </div>
+</section>
+
+<!-- ── SERVICE CARDS ── -->
+<div class="cards-wrap" id="services">
+
+  <!-- Card 1: The Assessment & Repair Process -->
+  <div class="scard reveal">
+    <div class="scard-text">
+      <div class="scard-num">01</div>
+      <div class="scard-tag">
+        <span class="scard-dot" style="background:var(--orange)"></span>
+        Assessment & Repair
+      </div>
+      <h3>Free first visit. You only pay for the fix.</h3>
+      <p>I come in, take a proper look at the machine at no charge. Once I know what's wrong, I tell you exactly what it needs and what it costs — before touching anything.</p>
+      <div class="scard-steps">
+        <div class="scard-step"><span class="step-n">1</span>Free on-site assessment — I diagnose the issue</div>
+        <div class="scard-step"><span class="step-n">2</span>You get a clear quote before any work begins</div>
+        <div class="scard-step"><span class="step-n">3</span>I source and order the correct parts</div>
+        <div class="scard-step"><span class="step-n">4</span>I return and complete the repair properly</div>
+      </div>
+      <button class="learn-link" onclick="openModal()">Book your free assessment →</button>
+    </div>
+    <div class="scard-visual vis-bg">
+      <img src="ergmendBrandAssets/toolkit-removebg-preview.png"
+           alt="Professional toolkit"
+           style="width:78%;max-width:300px;object-fit:contain;filter:drop-shadow(0 20px 48px rgba(14,12,11,0.22));transform:rotate(-3deg)">
+    </div>
+  </div>
+
+  <!-- Card 2: Service & Maintenance -->
+  <div class="scard reveal" style="flex-direction:row-reverse">
+    <div class="scard-text">
+      <div class="scard-num" style="color:rgba(255,255,255,0.05)">02</div>
+      <div class="scard-tag" style="background:rgba(197,241,65,0.12);border:1px solid rgba(197,241,65,0.2)">
+        <span class="scard-dot" style="background:var(--lime)"></span>
+        Service & Maintenance
+      </div>
+      <h3>Full stripped-down service. Inside, outside, everything.</h3>
+      <p>I take the machine completely apart, clean the flywheel housing, oil and inspect the chain, replace the damper if needed, check the cord tension, and ensure everything runs as it should.</p>
+      <div class="scard-steps">
+        <div class="scard-step"><span class="step-n" style="background:var(--steel)">✓</span>Full strip-down and internal clean</div>
+        <div class="scard-step"><span class="step-n" style="background:var(--steel)">✓</span>Chain inspection, oil, and replacement</div>
+        <div class="scard-step"><span class="step-n" style="background:var(--steel)">✓</span>Cord / bungee tension and wear check</div>
+        <div class="scard-step"><span class="step-n" style="background:var(--steel)">✓</span>Footrest, seat rail, and handle inspection</div>
+        <div class="scard-step"><span class="step-n" style="background:var(--steel)">✓</span>Overall safety and performance check</div>
+      </div>
+      <button class="learn-link" onclick="openModal()">Book a service →</button>
+    </div>
+    <div class="scard-visual vis-dark" style="position:relative">
+      <img src="ergmendBrandAssets/dustyMachine.png" alt="Machine before full service"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(14,12,11,0.8),rgba(37,60,82,0.65))"></div>
+      <div class="checklist" style="padding:2.5rem;position:relative;z-index:2">
+        <div class="check-item"><div class="check-box">✓</div><div class="check-text">Flywheel housing cleaned</div></div>
+        <div class="check-item"><div class="check-box">✓</div><div class="check-text">Chain lubricated and tensioned</div></div>
+        <div class="check-item"><div class="check-box">✓</div><div class="check-text">Damper blades inspected</div></div>
+        <div class="check-item"><div class="check-box">✓</div><div class="check-text">Bungee cord checked</div></div>
+        <div class="check-item"><div class="check-box">✓</div><div class="check-text">Seat rail cleaned and lubed</div></div>
+        <div class="check-item"><div class="check-box" style="background:rgba(197,241,65,0.35)">…</div><div class="check-text" style="color:rgba(255,255,255,0.4)">And more on request</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /cards-wrap -->
+
+<!-- ── MACHINE TYPES ── -->
+<section class="machines-section" id="machines">
+  <div class="machines-inner">
+    <div class="section-tag reveal">What I fix</div>
+    <h2 class="section-h2 reveal reveal-delay-1">Not just <em>rowing</em> machines</h2>
+    <p class="section-p reveal reveal-delay-2">
+      I service rowing ergs, ski ergs, bike ergs, and cycling machines. Mostly Concept2 — but not exclusively.
+    </p>
+    <div class="machines-grid">
+      <div class="machine-card reveal">
+        <img src="ergmendBrandAssets/C2rowerg2022-removebg-preview.png" alt="Concept2 RowErg">
+        <h3>Rowing Ergs</h3>
+        <div class="machine-tag">Concept2 RowERG &amp; others</div>
+        <p>The most common erg — I know every component inside out from years of training and repair.</p>
+      </div>
+      <div class="machine-card reveal reveal-delay-1">
+        <img src="ergmendBrandAssets/skierg-removebg-preview.png" alt="Concept2 SkiErg">
+        <h3>Ski Ergs</h3>
+        <div class="machine-tag">Concept2 SkiERG &amp; others</div>
+        <p>Ski ergs take a beating everywhere — gyms, clubs, and competition floors alike. I keep them running the way they should.</p>
+      </div>
+      <div class="machine-card reveal reveal-delay-2">
+        <img src="ergmendBrandAssets/bikeerg-removebg-preview.png" alt="Concept2 BikeErg">
+        <h3>Bike Ergs</h3>
+        <div class="machine-tag">Concept2 BikeERG &amp; cycling machines</div>
+        <p>Cycling ergs and machines — from squeaks and stiffness to full service and part replacement.</p>
+      </div>
+    </div>
+    <div class="machines-note reveal">Mostly Concept2, but not exclusively — if you're unsure, just ask</div>
+  </div>
+</section>
+
+<!-- ── STATS / IMPACT ── -->
+<section class="stats-section" id="stats">
+  <div class="stats-inner">
+    <div class="stats-eyebrow reveal">The drag factor gap is real</div>
+    <h2 class="stats-headline reveal reveal-delay-1">
+      A maintained machine<br>makes your results <span class="explode-container" id="explode-target">explode</span>
+    </h2>
+    <p class="stats-sub reveal reveal-delay-2">
+      Unmaintained ergs lose measurable resistance. Damper 6 on a dirty gym machine
+      can read ~100 drag factor instead of 150 — you're training harder for less output.
+    </p>
+
+    <!-- Stats -->
+    <div class="stats-cols reveal">
+      <div class="stat-col">
+        <div class="stat-num orange" data-count="15" data-suffix="%+">0%</div>
+        <div class="stat-desc">Power output loss on a dirty, unmaintained flywheel</div>
+      </div>
+      <div class="stat-col">
+        <div class="stat-num lime" data-count="3" data-suffix="×">0×</div>
+        <div class="stat-desc">More likely to break down without annual service</div>
+      </div>
+      <div class="stat-col">
+        <div class="stat-num white" data-count="5" data-suffix="+ yrs">0 yrs</div>
+        <div class="stat-desc">Extra machine lifespan with regular professional care</div>
+      </div>
+    </div>
+
+    <!-- Damper & drag factor data -->
+    <div class="damper-wrap reveal">
+      <div class="damper-eyebrow">Know your numbers</div>
+      <h3 class="damper-title">Damper setting vs. <em>drag factor</em></h3>
+      <p class="damper-intro">
+        Lever setting is more useful than most people think. A dirty machine at damper 6 behaves very differently from a clean race-floor machine at the same setting — you could be training at half the intended resistance without knowing it. Check drag factor via <strong style="color:rgba(255,255,255,0.7)">Menu → More Options → Display Drag Factor</strong>.
+      </p>
+      <div class="damper-table-wrap">
+        <table class="damper-table">
+          <thead>
+            <tr>
+              <th>Damper Setting</th>
+              <th>Clean Machine Drag Factor</th>
+              <th>Dirty Machine Drag Factor</th>
+              <th>Resistance Loss</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10 (Max)</td>
+              <td class="td-lime">~210 – 220</td>
+              <td class="td-orange">~100 – 110</td>
+              <td class="td-orange">~50%</td>
+            </tr>
+            <tr>
+              <td>5 (Mid)</td>
+              <td class="td-lime">~120</td>
+              <td class="td-orange">~70 – 80</td>
+              <td class="td-orange">~35%</td>
+            </tr>
+            <tr>
+              <td>1 (Min)</td>
+              <td class="td-lime">~90</td>
+              <td class="td-orange">~55 – 60</td>
+              <td class="td-orange">~35%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="damper-note">
+        <strong>HYROX race floor:</strong> Damper 6, drag factor ~150. If your gym machine feels lighter than a race-floor erg, check the drag factor and adjust your training damper to match. Gyms run dirty machines — damper 6 might only give you ~100 drag factor instead of 150. Damper between 4 and 6 is common for training; personal preference varies by stroke rate.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how-wrap">
+  <div class="how-inner">
+    <div class="how-hdr">
+      <div class="section-tag reveal" style="margin:0 auto 1.25rem" >The Process</div>
+      <h2 class="how-h2 reveal reveal-delay-1">Simple start to finish</h2>
+      <p class="how-sub reveal reveal-delay-2">No guesswork. No surprise costs. Just honest work done right.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="step-circle">1</div>
+        <h4>You reach out</h4>
+        <p>Send me a message or give me a call. Tell me roughly what's wrong with the machine and I'll get back to you quickly to arrange a visit.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-1">
+        <div class="step-circle">2</div>
+        <h4>I assess for free</h4>
+        <p>First visit is always free. I come in, diagnose the issue properly, and give you a clear, honest quote before any work begins.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-2">
+        <div class="step-circle">3</div>
+        <h4>Machine fixed</h4>
+        <p>Once parts are sourced (if needed), I return and complete the repair. You get a machine that performs the way it should.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OBJECTION BUSTERS ── -->
+<section class="obj-wrap" id="why-me">
+  <div class="obj-inner">
+    <div class="obj-hdr">
+      <div class="obj-hdr-top">
+        <h2 class="obj-h2 reveal">Why choose <em>ErgMend?</em></h2>
+        <p class="obj-intro reveal reveal-delay-1">
+          I let my actions speak for me. But here's what most people ask before they reach out.
+        </p>
+      </div>
+    </div>
+    <div class="obj-cards">
+      <div class="obj-card reveal">
+        <div class="obj-icon">⏰</div>
+        <h3 class="obj-h3">I am always on time</h3>
+        <p class="obj-p">
+          When I say I'll be there, I'm there. I know your gym runs on a schedule and I respect that. No vague windows, no chasing me down.
+        </p>
+      </div>
+      <div class="obj-card reveal reveal-delay-1">
+        <div class="obj-icon">🤝</div>
+        <h3 class="obj-h3">Price agreed before I start</h3>
+        <p class="obj-p">
+          You will always know the cost before I pick up a single tool. No surprise invoices at the end. A proper repair bill is almost always less than the cost of downtime.
+        </p>
+      </div>
+      <div class="obj-card reveal reveal-delay-2">
+        <div class="obj-icon">🏅</div>
+        <h3 class="obj-h3">Two years. Many machines.</h3>
+        <p class="obj-p">
+          I've been rowing my whole life and repairing ergs for two years. I understand how these machines work from the inside — because I train on them too.
+        </p>
+      </div>
+    </div>
+    <div class="obj-cta reveal">
+      <button class="btn-dark" onclick="openModal()">Book a free assessment →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT FORM ── -->
+<section class="form-section" id="contact">
+  <div class="form-inner">
+
+    <!-- LEFT: info -->
+    <div class="form-left reveal">
+      <div>
+        <div class="form-tag">Get in touch</div>
+        <h2 class="form-h2">Let's talk<br>about your <em>erg</em></h2>
+        <p class="form-sub">Drop me a message and I'll get back to you fast. Or leave your phone number if you'd prefer a call.</p>
+      </div>
+      <div class="form-contact-details">
+        <div class="form-contact-heading">Contact Details</div>
+        <div class="form-contact-item">
+          <div class="fci-icon">📞</div>
+          <div>
+            <div class="fci-label">Phone</div>
+            <div class="fci-value" style="color:var(--lime)">+353 (0)83 4300 112</div>
+          </div>
+        </div>
+        <div class="form-contact-item">
+          <div class="fci-icon">✉️</div>
+          <div>
+            <div class="fci-label">Email</div>
+            <div class="fci-value"><a href="mailto:gannashnova@gmail.com">gannashnova@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="form-contact-item">
+          <div class="fci-icon">📍</div>
+          <div>
+            <div class="fci-label">Coverage</div>
+            <div class="fci-value">Gyms, clubs &amp; athletes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: form -->
+    <div class="form-right reveal reveal-delay-1">
+      <div class="form-card">
+        <form class="contact-form" id="contact-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label" for="cf-fname">First name</label>
+              <input class="form-input" type="text" id="cf-fname" name="firstname" placeholder="First name">
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="cf-lname">Last name</label>
+              <input class="form-input" type="text" id="cf-lname" name="lastname" placeholder="Last name">
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="cf-email">Email <span>*</span></label>
+            <input class="form-input" type="email" id="cf-email" name="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="cf-phone">Phone number <small style="color:rgba(255,255,255,0.25);font-size:0.68rem;font-weight:400;letter-spacing:0;text-transform:none">(optional)</small></label>
+            <input class="form-input" type="tel" id="cf-phone" name="phone" placeholder="+44 7000 000 000">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="cf-msg">Message</label>
+            <textarea class="form-textarea" id="cf-msg" name="message" placeholder="Describe what's wrong with the machine — or just say hello."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message</button>
+          <p class="form-note">I'll reply within 24 hours. First assessment is always free.</p>
+        </form>
+        <div id="form-success" style="display:none;text-align:center;padding:2rem 0">
+          <div style="font-size:2.5rem;margin-bottom:1rem">✅</div>
+          <div style="font-family:'Big Shoulders Display',sans-serif;font-size:1.75rem;font-weight:800;color:#fff;margin-bottom:0.5rem">Message sent!</div>
+          <div style="color:rgba(255,255,255,0.45);font-size:0.875rem">I'll be in touch soon.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="foot-inner">
+    <span class="foot-logo">Erg<span>Mend</span></span>
+    <span class="foot-copy">© 2025 ErgMend. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- ── SIDEBAR DRAWER ── -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+<aside class="sidebar" id="sidebar" aria-label="Navigation menu">
+  <!-- Scrollable section -->
+  <div class="sidebar-scroll">
+
+  <!-- Header -->
+  <div class="sidebar-hdr">
+    <span class="sidebar-logo">Erg<span>Mend</span></span>
+    <button class="sidebar-close" onclick="closeSidebar()" aria-label="Close menu">✕</button>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <div class="sidebar-nav-label">Navigate</div>
+    <div class="sidebar-nav-links">
+      <button class="sidebar-nav-link" onclick="sidebarScrollTo('product-tour')">
+        What I do <span class="sidebar-nav-link-arrow">→</span>
+      </button>
+      <button class="sidebar-nav-link" onclick="sidebarScrollTo('machines')">
+        Machines I service <span class="sidebar-nav-link-arrow">→</span>
+      </button>
+      <button class="sidebar-nav-link" onclick="sidebarScrollTo('stats')">
+        Why it matters <span class="sidebar-nav-link-arrow">→</span>
+      </button>
+      <button class="sidebar-nav-link" onclick="sidebarScrollTo('product-tour')">
+        The process <span class="sidebar-nav-link-arrow">→</span>
+      </button>
+      <button class="sidebar-nav-link" onclick="sidebarScrollTo('why-me')">
+        Why ErgMend <span class="sidebar-nav-link-arrow">→</span>
+      </button>
+      <button class="sidebar-nav-link" onclick="sidebarScrollTo('contact')">
+        Contact <span class="sidebar-nav-link-arrow">→</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- About Me (inside scroll) -->
+  <div class="sidebar-about">
+    <div class="sidebar-about-label">About Me</div>
+    <div class="sidebar-about-card">
+      <!-- Video first, fallback to image -->
+      <video class="sidebar-about-media-video" autoplay muted loop playsinline
+             poster="ergmendBrandAssets/coolpic.jpg">
+        <source src="ergmendBrandAssets/ergrowingFootage.mp4" type="video/mp4">
+      </video>
+      <div class="sidebar-about-overlay">
+        <div class="sidebar-about-wip">🚧 Under Construction</div>
+        <div class="sidebar-about-name">The athlete<br>behind the wrench</div>
+        <div class="sidebar-about-desc">Full personal page coming soon — rowing background, race results, and why I started ErgMend.</div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /sidebar-scroll -->
+
+  <!-- CTAs (sticky footer) -->
+  <div class="sidebar-cta">
+    <button class="sidebar-cta-btn primary" onclick="closeSidebar();openModal()">📋 Book free assessment</button>
+    <span class="sidebar-cta-btn ghost" style="cursor:default">📞 +353 (0)83 4300 112</span>
+  </div>
+</aside>
+
+<!-- ── MODAL (Book a Chat) ── -->
+<div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <div class="modal-title">Book a<br><em>free chat</em></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <p style="font-size:0.875rem;color:var(--muted);line-height:1.65;margin-bottom:1.5rem">
+      First visit is always free. Send me your details and I'll be in touch to arrange a time that works for you.
+    </p>
+    <form class="modal-form" id="modal-form" onsubmit="handleModalSubmit(event)">
+      <div style="display:flex;flex-direction:column;gap:0.4rem">
+        <label class="mf-label" for="mf-name">Your name</label>
+        <input class="mf-input" type="text" id="mf-name" name="name" placeholder="e.g. Alex">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.4rem">
+        <label class="mf-label" for="mf-email">Email <span style="color:var(--orange)">*</span></label>
+        <input class="mf-input" type="email" id="mf-email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.4rem">
+        <label class="mf-label" for="mf-phone">Phone <small style="color:var(--muted);font-size:0.7rem;font-weight:400;letter-spacing:0;text-transform:none">(optional)</small></label>
+        <input class="mf-input" type="tel" id="mf-phone" name="phone" placeholder="+44 7000 000 000">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.4rem">
+        <label class="mf-label" for="mf-msg">What's wrong with the machine?</label>
+        <textarea class="mf-textarea" id="mf-msg" name="message" placeholder="Brief description — or just say hello."></textarea>
+      </div>
+      <button type="submit" class="mf-submit">Book free assessment →</button>
+      <p class="mf-note">I'll reply within 24 hours. First assessment is always free.</p>
+    </form>
+    <div id="modal-success" style="display:none;text-align:center;padding:1.5rem 0">
+      <div style="font-size:2rem;margin-bottom:0.75rem">✅</div>
+      <div style="font-family:'Big Shoulders Display',sans-serif;font-size:1.5rem;font-weight:800;color:var(--dark);margin-bottom:0.4rem">Got it!</div>
+      <div style="color:var(--muted);font-size:0.875rem">I'll be in touch shortly to arrange a visit.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── NAV SCROLL ──────────────────────────────────────
+const siteNav = document.getElementById('site-nav');
+window.addEventListener('scroll', () => {
+  siteNav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── MORPHING TEXT ──────────────────────────────────
+const morphWords = ['mend', 'fix', 'restore', 'service', 'mend'];
+let morphIdx = 0;
+const morphEl = document.getElementById('morph-word');
+
+function morphNext() {
+  morphEl.style.opacity = '0';
+  morphEl.style.transform = 'translateY(-10px)';
+  setTimeout(() => {
+    morphIdx = (morphIdx + 1) % (morphWords.length - 1);
+    morphEl.textContent = morphWords[morphIdx];
+    morphEl.style.transition = 'none';
+    morphEl.style.transform = 'translateY(8px)';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        morphEl.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+        morphEl.style.opacity = '1';
+        morphEl.style.transform = 'translateY(0)';
+      });
+    });
+  }, 280);
+}
+setInterval(morphNext, 2600);
+
+// ── TEXT EXPLODE (typewriter return, slow explosion) ──
+function setupExplode() {
+  const el = document.getElementById('explode-target');
+  if (!el) return;
+  const text = el.textContent;
+  el.innerHTML = text.split('').map(c =>
+    `<span class="explode-char">${c}</span>`
+  ).join('');
+
+  let playing = false;
+  function runExplode() {
+    if (playing) return;
+    playing = true;
+    const chars = el.querySelectorAll('.explode-char');
+
+    // Phase 1: Slow explosion outward
+    chars.forEach((c, i) => {
+      const x = (Math.random() - 0.5) * 130;
+      const y = -55 - Math.random() * 100;
+      const r = (Math.random() - 0.5) * 560;
+      const s = 0.6 + Math.random() * 1.8;
+      c.style.transition = `transform 1.5s cubic-bezier(0.16,1,0.3,1) ${i * 0.06}s, opacity 1.3s ease ${i * 0.045}s`;
+      c.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;
+      c.style.opacity = '0';
+    });
+
+    // Phase 2: After explosion settles, type each character back one by one
+    const explodeDuration = 1500 + chars.length * 60 + 500;
+    setTimeout(() => {
+      // Snap all back to origin, invisible
+      chars.forEach(c => {
+        c.style.transition = 'none';
+        c.style.transform = '';
+        c.style.opacity = '0';
+      });
+      // Typewriter: reveal each character sequentially
+      setTimeout(() => {
+        chars.forEach((c, i) => {
+          setTimeout(() => {
+            c.style.transition = 'opacity 0.08s ease';
+            c.style.opacity = '1';
+          }, i * 95);
+        });
+        setTimeout(() => { playing = false; }, chars.length * 95 + 400);
+      }, 60);
+    }, explodeDuration);
+  }
+
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      runExplode();
+      setInterval(runExplode, 5500);
+      obs.disconnect();
+    }
+  }, { threshold: 0.5 });
+  obs.observe(el);
+}
+setupExplode();
+
+// ── COUNTER ANIMATION ─────────────────────────────
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const start = Date.now();
+  const duration = 1600;
+  function update() {
+    const elapsed = Date.now() - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(target * ease);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target + suffix;
+  }
+  requestAnimationFrame(update);
+}
+
+// ── BAR ANIMATION ─────────────────────────────────
+function animateBars(container) {
+  container.querySelectorAll('.comp-bar-fill').forEach(bar => {
+    setTimeout(() => {
+      bar.style.width = bar.dataset.width;
+    }, 100);
+  });
+}
+
+// ── SCROLL REVEAL ──────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // trigger counters
+      const counters = entry.target.querySelectorAll('[data-count]');
+      counters.forEach(animateCounter);
+      // also if this element itself is a counter
+      if (entry.target.dataset.count) animateCounter(entry.target);
+      // trigger bars
+      if (entry.target.id === 'bars') animateBars(entry.target);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Also observe stat numbers directly
+document.querySelectorAll('[data-count]').forEach(el => {
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      animateCounter(entries[0].target);
+      obs.disconnect();
+    }
+  }, { threshold: 0.5 });
+  obs.observe(el);
+});
+
+// ── SIDEBAR ────────────────────────────────────────
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function sidebarScrollTo(id) {
+  closeSidebar();
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 320);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeSidebar(); closeModal(); }
+});
+
+// ── MODAL ──────────────────────────────────────────
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+// Escape handled above (sidebar + modal)
+
+// ── SPARKLES / PARTICLES ─────────────────────────
+if (typeof tsParticles !== 'undefined') {
+  tsParticles.load('hero-particles', {
+    fullScreen: { enable: false },
+    background: { color: { value: 'transparent' } },
+    fpsLimit: 60,
+    particles: {
+      number: { value: 90, density: { enable: true, value_area: 900 } },
+      color: { value: ['#C5F141', '#ffffff', '#C93D17'] },
+      opacity: {
+        value: { min: 0.05, max: 0.55 },
+        animation: { enable: true, speed: 1.2, sync: false }
+      },
+      size: {
+        value: { min: 0.6, max: 2.2 },
+        animation: { enable: false }
+      },
+      move: {
+        enable: true,
+        speed: { min: 0.15, max: 0.6 },
+        direction: 'none',
+        random: true,
+        straight: false,
+        outModes: { default: 'out' }
+      },
+      shape: { type: 'circle' },
+      links: { enable: false }
+    },
+    interactivity: {
+      events: {
+        onClick: { enable: true, mode: 'push' },
+        onHover: { enable: false }
+      },
+      modes: { push: { quantity: 3 } }
+    },
+    detectRetina: true
+  });
+}
+
+// ── FORM SUBMISSIONS ──────────────────────────────
+function handleFormSubmit(e) {
+  e.preventDefault();
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+function handleModalSubmit(e) {
+  e.preventDefault();
+  document.getElementById('modal-form').style.display = 'none';
+  document.getElementById('modal-success').style.display = 'block';
+  setTimeout(closeModal, 2800);
+}
+</script>
+</body>
+</html>
