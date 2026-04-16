@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ErgMend — Erg Repair & Maintenance</title>
+<title>Shekunov — Erg Repair &amp; Maintenance | Waterford, Ireland</title>
+<meta name="description" content="Professional erg repair and maintenance by Shekunov — based in Waterford, serving South East Ireland. Rowing machines, ski ergs, and bike ergs. Free first assessment, clear quote before work starts.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;700;800;900&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -845,13 +846,53 @@ footer {
   border-radius:0.75rem;font-size:0.815rem;color:rgba(255,255,255,0.5);line-height:1.7;
 }
 .damper-note strong { color:var(--lime) }
+
+/* ── REPAIR PROMISE ──────────────────────────────────────── */
+.promise-wrap { background:#fff;padding:5.5rem 2.5rem;border-top:1px solid var(--border) }
+.promise-inner { max-width:1100px;margin:0 auto }
+.promise-hdr { margin-bottom:3.5rem }
+.promise-hdr-top { display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap }
+.promise-h2 {
+  font-family:var(--font-head);font-size:clamp(2rem,4vw,3.5rem);
+  font-weight:900;letter-spacing:-0.03em;line-height:1.05;
+  max-width:500px;
+}
+.promise-h2 em { color:var(--orange);font-style:normal }
+.promise-intro { font-size:0.9rem;color:var(--muted);max-width:320px;line-height:1.65 }
+.promise-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem }
+.promise-card {
+  background:var(--bg);border-radius:1.25rem;padding:2rem;
+  border:1px solid var(--border);
+  transition:transform 0.25s,box-shadow 0.25s;
+}
+.promise-card:hover { transform:translateY(-4px);box-shadow:0 16px 48px rgba(14,12,11,0.1) }
+.promise-icon {
+  width:48px;height:48px;border-radius:0.75rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.35rem;margin-bottom:1.25rem;
+  background:rgba(197,241,65,0.18);
+}
+.promise-card:nth-child(2) .promise-icon { background:rgba(201,61,23,0.09) }
+.promise-card:nth-child(3) .promise-icon { background:rgba(37,60,82,0.09) }
+.promise-card:nth-child(4) .promise-icon { background:rgba(197,241,65,0.18) }
+.promise-card:nth-child(5) .promise-icon { background:rgba(201,61,23,0.09) }
+.promise-card:nth-child(6) .promise-icon { background:rgba(37,60,82,0.09) }
+.promise-h3 {
+  font-family:var(--font-head);font-size:1.3rem;font-weight:800;
+  letter-spacing:-0.01em;margin-bottom:0.65rem;
+}
+.promise-p { font-size:0.875rem;color:var(--muted);line-height:1.65 }
+.promise-cta { text-align:center;margin-top:3rem }
+@media(max-width:768px) {
+  .promise-cards { grid-template-columns:1fr }
+}
 </style>
 </head>
 <body>
 
 <!-- ── NAV ── -->
 <nav id="site-nav">
-  <a class="nav-logo" href="#">Erg<span>Mend</span></a>
+  <a class="nav-logo" href="#">Sheku<span>nov</span></a>
   <div class="nav-right">
     <button class="btn-book" onclick="openModal()">Book a chat</button>
     <button class="hamburger" aria-label="Menu" onclick="openSidebar()">
@@ -872,7 +913,8 @@ footer {
         your <em>erg?</em>
       </h1>
       <p class="hero-sub">
-        Rowing machines. Ski ergs. Bike ergs. If your machine makes a noise
+        Rowing machines. Ski ergs. Bike ergs. Based in Waterford — serving gyms, rowing clubs,
+        and sports facilities across South East Ireland. If your machine makes a noise
         it never used to — or it's due a full stripped-down service —
         I assess it, source what's needed, and fix it right.
       </p>
@@ -886,15 +928,14 @@ footer {
     <!-- RIGHT: machine showcase -->
     <div class="hero-right">
       <div class="img-grid">
-        <!-- Rowing Ireland badge -->
+        <!-- Location badge -->
         <div class="ri-badge">
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="18" cy="11" r="9" fill="rgba(52,211,100,0.5)"/>
-            <circle cx="9" cy="24" r="9" fill="rgba(52,211,100,0.5)"/>
-            <circle cx="27" cy="24" r="9" fill="rgba(52,211,100,0.5)"/>
-            <path d="M18 28 Q16 36 13 41" stroke="rgba(52,211,100,0.65)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="18" cy="16" r="9" fill="rgba(197,241,65,0.5)"/>
+            <path d="M18 25 L18 38" stroke="rgba(197,241,65,0.65)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="18" cy="16" r="4" fill="rgba(197,241,65,0.9)"/>
           </svg>
-          <span class="ri-badge-text">Rowing<br>Ireland</span>
+          <span class="ri-badge-text">Waterford<br>Ireland</span>
         </div>
         <div class="img-card img-card--a" onclick="document.getElementById('product-tour').scrollIntoView({behavior:'smooth'})">
           <img src="ergmendBrandAssets/C2rowerg2022-removebg-preview.png" alt="Row Erg">
@@ -1176,7 +1217,7 @@ footer {
   <div class="obj-inner">
     <div class="obj-hdr">
       <div class="obj-hdr-top">
-        <h2 class="obj-h2 reveal">Why choose <em>ErgMend?</em></h2>
+        <h2 class="obj-h2 reveal">Why choose <em>Shekunov?</em></h2>
         <p class="obj-intro reveal reveal-delay-1">
           I let my actions speak for me. But here's what most people ask before they reach out.
         </p>
@@ -1211,6 +1252,55 @@ footer {
   </div>
 </section>
 
+<!-- ── REPAIR PROMISE ── -->
+<section class="promise-wrap" id="repair-promise">
+  <div class="promise-inner">
+    <div class="promise-hdr">
+      <div class="promise-hdr-top">
+        <h2 class="promise-h2 reveal">My <em>Repair Promise</em></h2>
+        <p class="promise-intro reveal reveal-delay-1">
+          Here's exactly what you can expect — no surprises, no small print.
+        </p>
+      </div>
+    </div>
+    <div class="promise-cards">
+      <div class="promise-card reveal">
+        <div class="promise-icon">✅</div>
+        <h3 class="promise-h3">Free first assessment</h3>
+        <p class="promise-p">The first on-site visit is always free. I diagnose the issue, explain what I find, and give you a clear picture before anything else happens.</p>
+      </div>
+      <div class="promise-card reveal reveal-delay-1">
+        <div class="promise-icon">🔒</div>
+        <h3 class="promise-h3">No work without your go-ahead</h3>
+        <p class="promise-p">No paid labour and no parts orders proceed until you have approved the quote in writing or by message. You stay in control at every stage.</p>
+      </div>
+      <div class="promise-card reveal reveal-delay-2">
+        <div class="promise-icon">🛠️</div>
+        <h3 class="promise-h3">30-day workmanship guarantee</h3>
+        <p class="promise-p">If the same fault I repaired returns within 30 days and it is caused by my workmanship, I will fix it at no charge.</p>
+      </div>
+      <div class="promise-card reveal">
+        <div class="promise-icon">📦</div>
+        <h3 class="promise-h3">Parts covered by supplier warranty</h3>
+        <p class="promise-p">Replacement parts carry the warranty provided by the supplier or manufacturer. I will help you understand and claim it if needed.</p>
+      </div>
+      <div class="promise-card reveal reveal-delay-1">
+        <div class="promise-icon">💳</div>
+        <h3 class="promise-h3">Payment on completion</h3>
+        <p class="promise-p">Payment is due when the job is done, unless we agree otherwise in writing beforehand. Special-order parts may require a deposit or upfront payment before I can source them.</p>
+      </div>
+      <div class="promise-card reveal reveal-delay-2">
+        <div class="promise-icon">⚠️</div>
+        <h3 class="promise-h3">What is not covered</h3>
+        <p class="promise-p">The guarantee does not apply to misuse, accidental damage, faults unrelated to my repair, lack of maintenance, or normal wear and tear.</p>
+      </div>
+    </div>
+    <div class="promise-cta reveal">
+      <button class="btn-dark" onclick="openModal()">Get a free assessment →</button>
+    </div>
+  </div>
+</section>
+
 <!-- ── CONTACT FORM ── -->
 <section class="form-section" id="contact">
   <div class="form-inner">
@@ -1220,7 +1310,7 @@ footer {
       <div>
         <div class="form-tag">Get in touch</div>
         <h2 class="form-h2">Let's talk<br>about your <em>erg</em></h2>
-        <p class="form-sub">Drop me a message and I'll get back to you fast. Or leave your phone number if you'd prefer a call.</p>
+        <p class="form-sub">Drop me a message and I'll get back to you fast. Based in Waterford, I serve South East Ireland.</p>
       </div>
       <div class="form-contact-details">
         <div class="form-contact-heading">Contact Details</div>
@@ -1242,7 +1332,7 @@ footer {
           <div class="fci-icon">📍</div>
           <div>
             <div class="fci-label">Coverage</div>
-            <div class="fci-value">Gyms, clubs &amp; athletes</div>
+            <div class="fci-value">Waterford &middot; South East Ireland</div>
           </div>
         </div>
       </div>
@@ -1268,7 +1358,7 @@ footer {
           </div>
           <div class="form-field">
             <label class="form-label" for="cf-phone">Phone number <small style="color:rgba(255,255,255,0.25);font-size:0.68rem;font-weight:400;letter-spacing:0;text-transform:none">(optional)</small></label>
-            <input class="form-input" type="tel" id="cf-phone" name="phone" placeholder="+44 7000 000 000">
+            <input class="form-input" type="tel" id="cf-phone" name="phone" placeholder="+353 87 000 0000">
           </div>
           <div class="form-field">
             <label class="form-label" for="cf-msg">Message</label>
@@ -1291,8 +1381,8 @@ footer {
 <!-- ── FOOTER ── -->
 <footer>
   <div class="foot-inner">
-    <span class="foot-logo">Erg<span>Mend</span></span>
-    <span class="foot-copy">© 2025 ErgMend. All rights reserved.</span>
+    <span class="foot-logo">Sheku<span>nov</span></span>
+    <span class="foot-copy">© 2026 Shekunov. All rights reserved.</span>
   </div>
 </footer>
 
@@ -1304,7 +1394,7 @@ footer {
 
   <!-- Header -->
   <div class="sidebar-hdr">
-    <span class="sidebar-logo">Erg<span>Mend</span></span>
+    <span class="sidebar-logo">Sheku<span>nov</span></span>
     <button class="sidebar-close" onclick="closeSidebar()" aria-label="Close menu">✕</button>
   </div>
 
@@ -1325,7 +1415,10 @@ footer {
         The process <span class="sidebar-nav-link-arrow">→</span>
       </button>
       <button class="sidebar-nav-link" onclick="sidebarScrollTo('why-me')">
-        Why ErgMend <span class="sidebar-nav-link-arrow">→</span>
+        Why Shekunov <span class="sidebar-nav-link-arrow">→</span>
+      </button>
+      <button class="sidebar-nav-link" onclick="sidebarScrollTo('repair-promise')">
+        Repair Promise <span class="sidebar-nav-link-arrow">→</span>
       </button>
       <button class="sidebar-nav-link" onclick="sidebarScrollTo('contact')">
         Contact <span class="sidebar-nav-link-arrow">→</span>
@@ -1345,7 +1438,7 @@ footer {
       <div class="sidebar-about-overlay">
         <div class="sidebar-about-wip">🚧 Under Construction</div>
         <div class="sidebar-about-name">The athlete<br>behind the wrench</div>
-        <div class="sidebar-about-desc">Full personal page coming soon — rowing background, race results, and why I started ErgMend.</div>
+        <div class="sidebar-about-desc">Full personal page coming soon — rowing background, race results, and why I started this service.</div>
       </div>
     </div>
   </div>
@@ -1380,7 +1473,7 @@ footer {
       </div>
       <div style="display:flex;flex-direction:column;gap:0.4rem">
         <label class="mf-label" for="mf-phone">Phone <small style="color:var(--muted);font-size:0.7rem;font-weight:400;letter-spacing:0;text-transform:none">(optional)</small></label>
-        <input class="mf-input" type="tel" id="mf-phone" name="phone" placeholder="+44 7000 000 000">
+        <input class="mf-input" type="tel" id="mf-phone" name="phone" placeholder="+353 87 000 0000">
       </div>
       <div style="display:flex;flex-direction:column;gap:0.4rem">
         <label class="mf-label" for="mf-msg">What's wrong with the machine?</label>
