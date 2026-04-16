@@ -134,50 +134,39 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--dark);-webkit
   position:relative;height:580px;
   display:flex;align-items:center;justify-content:center;
 }
-.img-grid { position:relative;width:100%;height:100% }
+.img-grid {
+  display:flex;align-items:flex-end;justify-content:center;
+  gap:0.875rem;width:100%;height:100%;
+  padding:2rem 0.5rem 1rem;position:relative;
+}
 .img-card {
-  position:absolute;border-radius:1.5rem;overflow:hidden;
-  background:#1a1a1a;
-  transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  border-radius:1.25rem;overflow:hidden;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:1.25rem 0.75rem 0.9rem;
+  cursor:pointer;
+  transition:background 0.22s,border-color 0.22s,transform 0.22s;
 }
-.img-card:hover { transform:scale(1.03) translateY(-4px) !important }
-.img-card img { width:100%;height:100%;object-fit:contain;display:block;padding:14px }
-.img-card--a {
-  width:220px;height:305px;top:20px;right:10px;
-  transform:rotate(-5deg);z-index:3;
-  box-shadow:0 30px 80px rgba(0,0,0,0.55),0 0 0 1px rgba(255,255,255,0.08);
+.img-card:hover {
+  background:rgba(255,255,255,0.07);
+  border-color:rgba(201,61,23,0.45);
+  transform:translateY(-5px);
 }
-.img-card--b {
-  width:165px;height:285px;top:35px;left:10px;
-  transform:rotate(5deg);z-index:1;
-  box-shadow:0 24px 64px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.06);
-}
-.img-card--c {
-  width:185px;height:255px;bottom:20px;left:50%;margin-left:-92px;
-  transform:rotate(-2deg);z-index:2;
-  box-shadow:0 24px 64px rgba(0,0,0,0.48),0 0 0 1px rgba(255,255,255,0.07);
-}
+.img-card img { width:100%;height:240px;object-fit:contain;display:block }
+.img-card--a,.img-card--b,.img-card--c {}
 .img-card-label {
-  position:absolute;bottom:0;left:0;right:0;
-  padding:0.8rem 1rem;
-  background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);
-  font-family:var(--font-head);font-size:0.8rem;font-weight:700;
-  color:rgba(255,255,255,0.85);letter-spacing:0.04em;text-transform:uppercase;
+  font-family:var(--font-head);font-size:0.78rem;font-weight:700;
+  color:rgba(255,255,255,0.5);letter-spacing:0.06em;text-transform:uppercase;
+  margin-top:0.75rem;text-align:center;
 }
-.img-card--a::after {
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(160deg,rgba(201,61,23,0.15) 0%,transparent 60%);
-  pointer-events:none;z-index:1;
+.ri-badge {
+  position:absolute;top:0.75rem;right:0.75rem;
+  display:flex;flex-direction:column;align-items:center;gap:0.2rem;z-index:10;
 }
-.img-card--b::after {
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(160deg,rgba(37,60,82,0.22) 0%,transparent 60%);
-  pointer-events:none;z-index:1;
-}
-.img-card--c::after {
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(160deg,rgba(197,241,65,0.1) 0%,transparent 60%);
-  pointer-events:none;z-index:1;
+.ri-badge-text {
+  font-size:0.5rem;font-weight:700;color:rgba(255,255,255,0.3);
+  letter-spacing:0.05em;text-transform:uppercase;text-align:center;line-height:1.35;
 }
 .hero-scroll-hint {
   text-align:center;padding-bottom:2rem;
@@ -894,26 +883,30 @@ footer {
         </button>
       </div>
     </div>
-    <!-- RIGHT: athlete image grid -->
+    <!-- RIGHT: machine showcase -->
     <div class="hero-right">
       <div class="img-grid">
-        <div class="img-card img-card--a" onclick="document.getElementById('machines').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
-          <img src="ergmendBrandAssets/C2rowerg2022-removebg-preview.png" alt="Concept2 RowErg">
-          <div class="img-card-label">ROW ERG</div>
+        <!-- Rowing Ireland badge -->
+        <div class="ri-badge">
+          <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="11" r="9" fill="rgba(52,211,100,0.5)"/>
+            <circle cx="9" cy="24" r="9" fill="rgba(52,211,100,0.5)"/>
+            <circle cx="27" cy="24" r="9" fill="rgba(52,211,100,0.5)"/>
+            <path d="M18 28 Q16 36 13 41" stroke="rgba(52,211,100,0.65)" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <span class="ri-badge-text">Rowing<br>Ireland</span>
         </div>
-        <div class="img-card img-card--b" onclick="document.getElementById('machines').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
-          <img src="ergmendBrandAssets/skierg-removebg-preview.png" alt="Concept2 SkiErg">
-          <div class="img-card-label">SKI ERG</div>
+        <div class="img-card img-card--a" onclick="document.getElementById('product-tour').scrollIntoView({behavior:'smooth'})">
+          <img src="ergmendBrandAssets/C2rowerg2022-removebg-preview.png" alt="Row Erg">
+          <div class="img-card-label">Row Erg</div>
         </div>
-        <div class="img-card img-card--c" onclick="document.getElementById('machines').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
-          <img src="ergmendBrandAssets/bikeerg-removebg-preview.png" alt="Concept2 BikeErg">
-          <div class="img-card-label">BIKE ERG</div>
+        <div class="img-card img-card--b" onclick="document.getElementById('product-tour').scrollIntoView({behavior:'smooth'})">
+          <img src="ergmendBrandAssets/skierg-removebg-preview.png" alt="Ski Erg">
+          <div class="img-card-label">Ski Erg</div>
         </div>
-        <!-- Floating detail -->
-        <div style="position:absolute;bottom:20px;right:10px;background:rgba(197,241,65,0.12);border:1px solid rgba(197,241,65,0.2);border-radius:1rem;padding:0.85rem 1.1rem;backdrop-filter:blur(8px);z-index:5;max-width:190px">
-          <div style="font-size:0.65rem;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.3rem">Latest fix</div>
-          <div style="font-family:'Big Shoulders Display',sans-serif;font-size:1rem;font-weight:800;color:#fff;">Chain replaced ✓</div>
-          <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);margin-top:0.15rem">Same-day service</div>
+        <div class="img-card img-card--c" onclick="document.getElementById('product-tour').scrollIntoView({behavior:'smooth'})">
+          <img src="ergmendBrandAssets/bikeerg-removebg-preview.png" alt="Bike Erg">
+          <div class="img-card-label">Bike Erg</div>
         </div>
       </div>
     </div>
@@ -1050,29 +1043,29 @@ footer {
     <div class="section-tag reveal">What I fix</div>
     <h2 class="section-h2 reveal reveal-delay-1">Not just <em>rowing</em> machines</h2>
     <p class="section-p reveal reveal-delay-2">
-      I service rowing ergs, ski ergs, bike ergs, and cycling machines. Mostly Concept2 — but not exclusively.
+      I service rowing ergs, ski ergs, and bike ergs across all major brands.
     </p>
     <div class="machines-grid">
       <div class="machine-card reveal">
-        <img src="ergmendBrandAssets/C2rowerg2022-removebg-preview.png" alt="Concept2 RowErg">
+        <img src="ergmendBrandAssets/C2rowerg2022-removebg-preview.png" alt="Row Erg">
         <h3>Rowing Ergs</h3>
-        <div class="machine-tag">Concept2 RowERG &amp; others</div>
+        <div class="machine-tag">All rowing ergs</div>
         <p>The most common erg — I know every component inside out from years of training and repair.</p>
       </div>
       <div class="machine-card reveal reveal-delay-1">
-        <img src="ergmendBrandAssets/skierg-removebg-preview.png" alt="Concept2 SkiErg">
+        <img src="ergmendBrandAssets/skierg-removebg-preview.png" alt="Ski Erg">
         <h3>Ski Ergs</h3>
-        <div class="machine-tag">Concept2 SkiERG &amp; others</div>
+        <div class="machine-tag">All ski ergs</div>
         <p>Ski ergs take a beating everywhere — gyms, clubs, and competition floors alike. I keep them running the way they should.</p>
       </div>
       <div class="machine-card reveal reveal-delay-2">
-        <img src="ergmendBrandAssets/bikeerg-removebg-preview.png" alt="Concept2 BikeErg">
+        <img src="ergmendBrandAssets/bikeerg-removebg-preview.png" alt="Bike Erg">
         <h3>Bike Ergs</h3>
-        <div class="machine-tag">Concept2 BikeERG &amp; cycling machines</div>
+        <div class="machine-tag">All bike ergs</div>
         <p>Cycling ergs and machines — from squeaks and stiffness to full service and part replacement.</p>
       </div>
     </div>
-    <div class="machines-note reveal">Mostly Concept2, but not exclusively — if you're unsure, just ask</div>
+    <div class="machines-note reveal">All major brands serviced — if you're unsure, just ask</div>
   </div>
 </section>
 
@@ -1162,17 +1155,17 @@ footer {
       <div class="how-step reveal">
         <div class="step-circle">1</div>
         <h4>You reach out</h4>
-        <p>Send me a message or give me a call. Tell me roughly what's wrong with the machine and I'll get back to you quickly to arrange a visit.</p>
+        <p>Drop me a message. Tell me what's wrong and I'll get back to you quickly to arrange a visit.</p>
       </div>
       <div class="how-step reveal reveal-delay-1">
         <div class="step-circle">2</div>
-        <h4>I assess for free</h4>
-        <p>First visit is always free. I come in, diagnose the issue properly, and give you a clear, honest quote before any work begins.</p>
+        <h4>Free assessment</h4>
+        <p>First visit is always free. I diagnose the issue and give you a clear, honest quote before anything starts.</p>
       </div>
       <div class="how-step reveal reveal-delay-2">
         <div class="step-circle">3</div>
         <h4>Machine fixed</h4>
-        <p>Once parts are sourced (if needed), I return and complete the repair. You get a machine that performs the way it should.</p>
+        <p>Parts sourced if needed, repair done. Your machine back to full performance.</p>
       </div>
     </div>
   </div>
