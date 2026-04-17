@@ -904,7 +904,7 @@ footer {
   "name": "Shekunov Erg Repair & Maintenance",
   "description": "Professional ergometer repair and maintenance service based in Waterford, South East Ireland. Specialising in rowing machines, ski ergs, and bike ergs. Free first assessment, clear quote before any work starts.",
   "url": "https://heorhiishekunov.org",
-  "telephone": "+353834300112",
+  "telephone": "+353 83 430 0112",
   "email": "info@heorhiishekunov.org",
   "founder": {
     "@type": "Person",
@@ -1054,7 +1054,7 @@ footer {
   <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap">
     <span style="font-size:0.85rem;color:rgba(255,255,255,0.55);font-weight:400">When you reach out —</span>
     <span style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(197,241,65,0.1);border:1px solid rgba(197,241,65,0.22);border-radius:100px;padding:0.42rem 1.1rem;font-size:0.82rem;font-weight:600;color:var(--lime)">
-      <span>📞</span> Give me a call &nbsp;<strong>+353 (0)83 4300 112</strong>
+      <span>📞</span> Give me a call &nbsp;<strong>+353 83 430 0112</strong>
     </span>
     <span style="font-size:0.72rem;color:rgba(255,255,255,0.3)">or</span>
     <button onclick="openModal()" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:0.42rem 1.1rem;font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.7);cursor:pointer;font-family:var(--font-body);transition:background 0.18s" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
@@ -1364,7 +1364,7 @@ footer {
           <div class="fci-icon">📞</div>
           <div>
             <div class="fci-label">Phone</div>
-            <div class="fci-value" style="color:var(--lime)">+353 (0)83 4300 112</div>
+            <div class="fci-value" style="color:var(--lime)">+353 83 430 0112</div>
           </div>
         </div>
         <div class="form-contact-item">
@@ -1388,6 +1388,8 @@ footer {
     <div class="form-right reveal reveal-delay-1">
       <div class="form-card">
         <form class="contact-form" id="contact-form" onsubmit="handleFormSubmit(event)">
+          <input type="hidden" name="access_key" value="5d7e4d47-07c5-4830-8ae5-8b77a11f08bf">
+          <input type="hidden" name="subject" value="New message — ErgMend website">
           <div class="form-row">
             <div class="form-field">
               <label class="form-label" for="cf-fname">First name</label>
@@ -1491,7 +1493,7 @@ footer {
   <!-- CTAs (sticky footer) -->
   <div class="sidebar-cta">
     <button class="sidebar-cta-btn primary" onclick="closeSidebar();openModal()">📋 Book free assessment</button>
-    <span class="sidebar-cta-btn ghost" style="cursor:default">📞 +353 (0)83 4300 112</span>
+    <span class="sidebar-cta-btn ghost" style="cursor:default">📞 +353 83 430 0112</span>
   </div>
 </aside>
 
@@ -1506,6 +1508,8 @@ footer {
       First visit is always free. Send me your details and I'll be in touch to arrange a time that works for you.
     </p>
     <form class="modal-form" id="modal-form" onsubmit="handleModalSubmit(event)">
+      <input type="hidden" name="access_key" value="5d7e4d47-07c5-4830-8ae5-8b77a11f08bf">
+      <input type="hidden" name="subject" value="Free assessment booking — ErgMend website">
       <div style="display:flex;flex-direction:column;gap:0.4rem">
         <label class="mf-label" for="mf-name">Your name</label>
         <input class="mf-input" type="text" id="mf-name" name="name" placeholder="e.g. Alex">
@@ -1756,16 +1760,60 @@ if (typeof tsParticles !== 'undefined') {
 }
 
 // ── FORM SUBMISSIONS ──────────────────────────────
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
   e.preventDefault();
-  document.getElementById('contact-form').style.display = 'none';
-  document.getElementById('form-success').style.display = 'block';
+  const form = document.getElementById('contact-form');
+  const btn = form.querySelector('button[type="submit"]');
+  const originalText = btn.textContent;
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: new FormData(form)
+    });
+    const data = await res.json();
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } else {
+      alert('Error: ' + data.message);
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
+  } catch {
+    alert('Something went wrong. Please try again.');
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
 }
-function handleModalSubmit(e) {
+async function handleModalSubmit(e) {
   e.preventDefault();
-  document.getElementById('modal-form').style.display = 'none';
-  document.getElementById('modal-success').style.display = 'block';
-  setTimeout(closeModal, 2800);
+  const form = document.getElementById('modal-form');
+  const btn = form.querySelector('button[type="submit"]');
+  const originalText = btn.textContent;
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: new FormData(form)
+    });
+    const data = await res.json();
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('modal-success').style.display = 'block';
+      setTimeout(closeModal, 2800);
+    } else {
+      alert('Error: ' + data.message);
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
+  } catch {
+    alert('Something went wrong. Please try again.');
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
 }
 
 // Drag-to-scroll for .obj-cards
