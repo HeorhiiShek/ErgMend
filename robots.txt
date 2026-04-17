@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://heorhiishekunov.netlify.app/sitemap.xml
