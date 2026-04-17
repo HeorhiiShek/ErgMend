@@ -466,11 +466,24 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--dark);-webkit
 }
 .obj-h2 em { color:var(--orange);font-style:normal }
 .obj-intro { font-size:0.9rem;color:var(--muted);max-width:320px;line-height:1.65 }
-.obj-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem }
+.obj-cards {
+  display:flex;gap:1.25rem;
+  overflow-x:auto;overflow-y:visible;
+  padding-bottom:1.25rem;
+  scroll-snap-type:x mandatory;
+  cursor:grab;
+  -webkit-overflow-scrolling:touch;
+}
+.obj-cards:active { cursor:grabbing }
+.obj-cards::-webkit-scrollbar { height:6px }
+.obj-cards::-webkit-scrollbar-track { background:var(--border);border-radius:99px }
+.obj-cards::-webkit-scrollbar-thumb { background:var(--orange);border-radius:99px }
 .obj-card {
   background:#fff;border-radius:1.25rem;padding:2rem;
   border:1px solid var(--border);
   transition:transform 0.25s,box-shadow 0.25s;
+  min-width:280px;max-width:280px;flex-shrink:0;
+  scroll-snap-align:start;
 }
 .obj-card:hover { transform:translateY(-4px);box-shadow:0 16px 48px rgba(14,12,11,0.1) }
 .obj-icon {
@@ -481,6 +494,12 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--dark);-webkit
 .obj-card:nth-child(1) .obj-icon { background:rgba(197,241,65,0.2) }
 .obj-card:nth-child(2) .obj-icon { background:rgba(201,61,23,0.1) }
 .obj-card:nth-child(3) .obj-icon { background:rgba(37,60,82,0.1) }
+.obj-card:nth-child(4) .obj-icon { background:rgba(197,241,65,0.2) }
+.obj-card:nth-child(5) .obj-icon { background:rgba(201,61,23,0.1) }
+.obj-card:nth-child(6) .obj-icon { background:rgba(37,60,82,0.1) }
+.obj-card:nth-child(7) .obj-icon { background:rgba(197,241,65,0.2) }
+.obj-card:nth-child(8) .obj-icon { background:rgba(201,61,23,0.1) }
+.obj-card:nth-child(9) .obj-icon { background:rgba(37,60,82,0.1) }
 .obj-h3 {
   font-family:var(--font-head);font-size:1.3rem;font-weight:800;
   letter-spacing:-0.01em;margin-bottom:0.65rem;
@@ -781,7 +800,7 @@ footer {
   .scard { grid-template-columns:1fr }
   .how-steps { grid-template-columns:1fr }
   .how-steps::before { display:none }
-  .obj-cards { grid-template-columns:1fr }
+  .obj-cards { gap:0.9rem }
   .stats-cols { grid-template-columns:1fr }
   .stat-col { border-left:none;border-top:1px solid rgba(255,255,255,0.07);padding:1.5rem 0;margin-top:0 }
   .stat-col:first-child { border-top:none }
@@ -876,45 +895,6 @@ footer {
 }
 .damper-note strong { color:var(--lime) }
 
-/* ── REPAIR PROMISE ──────────────────────────────────────── */
-.promise-wrap { background:#fff;padding:5.5rem 2.5rem;border-top:1px solid var(--border) }
-.promise-inner { max-width:1100px;margin:0 auto }
-.promise-hdr { margin-bottom:3.5rem }
-.promise-hdr-top { display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap }
-.promise-h2 {
-  font-family:var(--font-head);font-size:clamp(2rem,4vw,3.5rem);
-  font-weight:900;letter-spacing:-0.03em;line-height:1.05;
-  max-width:500px;
-}
-.promise-h2 em { color:var(--orange);font-style:normal }
-.promise-intro { font-size:0.9rem;color:var(--muted);max-width:320px;line-height:1.65 }
-.promise-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem }
-.promise-card {
-  background:var(--bg);border-radius:1.25rem;padding:2rem;
-  border:1px solid var(--border);
-  transition:transform 0.25s,box-shadow 0.25s;
-}
-.promise-card:hover { transform:translateY(-4px);box-shadow:0 16px 48px rgba(14,12,11,0.1) }
-.promise-icon {
-  width:48px;height:48px;border-radius:0.75rem;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.35rem;margin-bottom:1.25rem;
-  background:rgba(197,241,65,0.18);
-}
-.promise-card:nth-child(2) .promise-icon { background:rgba(201,61,23,0.09) }
-.promise-card:nth-child(3) .promise-icon { background:rgba(37,60,82,0.09) }
-.promise-card:nth-child(4) .promise-icon { background:rgba(197,241,65,0.18) }
-.promise-card:nth-child(5) .promise-icon { background:rgba(201,61,23,0.09) }
-.promise-card:nth-child(6) .promise-icon { background:rgba(37,60,82,0.09) }
-.promise-h3 {
-  font-family:var(--font-head);font-size:1.3rem;font-weight:800;
-  letter-spacing:-0.01em;margin-bottom:0.65rem;
-}
-.promise-p { font-size:0.875rem;color:var(--muted);line-height:1.65 }
-.promise-cta { text-align:center;margin-top:3rem }
-@media(max-width:768px) {
-  .promise-cards { grid-template-columns:1fr }
-}
 </style>
 
 <script type="application/ld+json">
@@ -1300,91 +1280,69 @@ footer {
   </div>
 </section>
 
-<!-- ── OBJECTION BUSTERS ── -->
+<!-- ── WHY SHEKUNOV + REPAIR PROMISE (merged) ── -->
 <section class="obj-wrap" id="why-me">
   <div class="obj-inner">
     <div class="obj-hdr">
       <div class="obj-hdr-top">
         <h2 class="obj-h2 reveal">Why choose <em>Shekunov?</em></h2>
-        <p class="obj-intro reveal reveal-delay-1">
-          I let my actions speak for me. But here's what most people ask before they reach out.
-        </p>
       </div>
     </div>
     <div class="obj-cards">
-      <div class="obj-card reveal">
+      <div class="obj-card">
         <div class="obj-icon">⏰</div>
         <h3 class="obj-h3">I am always on time</h3>
         <p class="obj-p">
           When I say I'll be there, I'm there. I know your gym runs on a schedule and I respect that. No vague windows, no chasing me down.
         </p>
       </div>
-      <div class="obj-card reveal reveal-delay-1">
+      <div class="obj-card">
         <div class="obj-icon">🤝</div>
         <h3 class="obj-h3">Price agreed before I start</h3>
         <p class="obj-p">
           You will always know the cost before I pick up a single tool. No surprise invoices at the end. A proper repair bill is almost always less than the cost of downtime.
         </p>
       </div>
-      <div class="obj-card reveal reveal-delay-2">
+      <div class="obj-card">
         <div class="obj-icon">🏅</div>
         <h3 class="obj-h3">Two years. Many machines.</h3>
         <p class="obj-p">
           I've been rowing my whole life and repairing ergs for two years. I understand how these machines work from the inside — because I train on them too.
         </p>
       </div>
+      <div class="obj-card">
+        <div class="obj-icon">✅</div>
+        <h3 class="obj-h3">Free first assessment</h3>
+        <p class="obj-p">The first on-site visit is always free. I diagnose the issue, explain what I find, and give you a clear picture before anything else happens.</p>
+      </div>
+      <div class="obj-card">
+        <div class="obj-icon">🔒</div>
+        <h3 class="obj-h3">No work without your go-ahead</h3>
+        <p class="obj-p">No paid labour and no parts orders proceed until you have approved the quote in writing or by message. You stay in control at every stage.</p>
+      </div>
+      <div class="obj-card">
+        <div class="obj-icon">🛠️</div>
+        <h3 class="obj-h3">30-day workmanship guarantee</h3>
+        <p class="obj-p">If the same fault I repaired returns within 30 days and it is caused by my workmanship, I will fix it at no charge.</p>
+      </div>
+      <div class="obj-card">
+        <div class="obj-icon">📦</div>
+        <h3 class="obj-h3">Parts covered by supplier warranty</h3>
+        <p class="obj-p">Replacement parts carry the warranty provided by the supplier or manufacturer. I will help you understand and claim it if needed.</p>
+      </div>
+      <div class="obj-card">
+        <div class="obj-icon">💳</div>
+        <h3 class="obj-h3">Payment on completion</h3>
+        <p class="obj-p">Payment is due when the job is done, unless we agree otherwise in writing beforehand. Special-order parts may require a deposit or upfront payment before I can source them.</p>
+      </div>
+      <div class="obj-card">
+        <div class="obj-icon">⚠️</div>
+        <h3 class="obj-h3">What is not covered</h3>
+        <p class="obj-p">The guarantee does not apply to misuse, accidental damage, faults unrelated to my repair, lack of maintenance, or normal wear and tear.</p>
+      </div>
     </div>
     <div class="obj-cta reveal">
       <button class="btn-dark" onclick="openModal()">Book a free assessment →</button>
-    </div>
-  </div>
-</section>
-
-<!-- ── REPAIR PROMISE ── -->
-<section class="promise-wrap" id="repair-promise">
-  <div class="promise-inner">
-    <div class="promise-hdr">
-      <div class="promise-hdr-top">
-        <h2 class="promise-h2 reveal">My <em>Repair Promise</em></h2>
-        <p class="promise-intro reveal reveal-delay-1">
-          Here's exactly what you can expect — no surprises, no small print.
-        </p>
-      </div>
-    </div>
-    <div class="promise-cards">
-      <div class="promise-card reveal">
-        <div class="promise-icon">✅</div>
-        <h3 class="promise-h3">Free first assessment</h3>
-        <p class="promise-p">The first on-site visit is always free. I diagnose the issue, explain what I find, and give you a clear picture before anything else happens.</p>
-      </div>
-      <div class="promise-card reveal reveal-delay-1">
-        <div class="promise-icon">🔒</div>
-        <h3 class="promise-h3">No work without your go-ahead</h3>
-        <p class="promise-p">No paid labour and no parts orders proceed until you have approved the quote in writing or by message. You stay in control at every stage.</p>
-      </div>
-      <div class="promise-card reveal reveal-delay-2">
-        <div class="promise-icon">🛠️</div>
-        <h3 class="promise-h3">30-day workmanship guarantee</h3>
-        <p class="promise-p">If the same fault I repaired returns within 30 days and it is caused by my workmanship, I will fix it at no charge.</p>
-      </div>
-      <div class="promise-card reveal">
-        <div class="promise-icon">📦</div>
-        <h3 class="promise-h3">Parts covered by supplier warranty</h3>
-        <p class="promise-p">Replacement parts carry the warranty provided by the supplier or manufacturer. I will help you understand and claim it if needed.</p>
-      </div>
-      <div class="promise-card reveal reveal-delay-1">
-        <div class="promise-icon">💳</div>
-        <h3 class="promise-h3">Payment on completion</h3>
-        <p class="promise-p">Payment is due when the job is done, unless we agree otherwise in writing beforehand. Special-order parts may require a deposit or upfront payment before I can source them.</p>
-      </div>
-      <div class="promise-card reveal reveal-delay-2">
-        <div class="promise-icon">⚠️</div>
-        <h3 class="promise-h3">What is not covered</h3>
-        <p class="promise-p">The guarantee does not apply to misuse, accidental damage, faults unrelated to my repair, lack of maintenance, or normal wear and tear.</p>
-      </div>
-    </div>
-    <div class="promise-cta reveal">
-      <button class="btn-dark" onclick="openModal()">Get a free assessment →</button>
     </div>
   </div>
 </section>
@@ -1503,10 +1461,7 @@ footer {
         The process <span class="sidebar-nav-link-arrow">→</span>
       </button>
       <button class="sidebar-nav-link" onclick="sidebarScrollTo('why-me')">
-        Why Shekunov <span class="sidebar-nav-link-arrow">→</span>
-      </button>
-      <button class="sidebar-nav-link" onclick="sidebarScrollTo('repair-promise')">
-        Repair Promise <span class="sidebar-nav-link-arrow">→</span>
+        Why Shekunov &amp; Our Promise <span class="sidebar-nav-link-arrow">→</span>
       </button>
       <button class="sidebar-nav-link" onclick="sidebarScrollTo('contact')">
         Contact <span class="sidebar-nav-link-arrow">→</span>
@@ -1812,6 +1767,26 @@ function handleModalSubmit(e) {
   document.getElementById('modal-success').style.display = 'block';
   setTimeout(closeModal, 2800);
 }
+
+// Drag-to-scroll for .obj-cards
+(function(){
+  const slider = document.querySelector('.obj-cards');
+  if (!slider) return;
+  let isDown = false, startX, scrollLeft;
+  slider.addEventListener('mousedown', e => {
+    isDown = true;
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+  slider.addEventListener('mouseleave', () => { isDown = false });
+  slider.addEventListener('mouseup', () => { isDown = false });
+  slider.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    slider.scrollLeft = scrollLeft - (x - startX) * 1.2;
+  });
+})();
 </script>
 </body>
 </html>
